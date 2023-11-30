@@ -14,6 +14,7 @@ export const TopicProvider = ({ children }) => {
   const [funLinks, setFunLinks] = useState([]);
   const [deepdiveData, setDeepdiveData] = useState([]);
   const [quizData, setQuizData] = useState([]);
+  const [recentTopics, setRecentTopics] = useState([]);
   const navigate = useNavigate();
 
   const searchTopic = async () => {
@@ -55,6 +56,19 @@ export const TopicProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    const getRecentTopics = async () => {
+      try {
+        const response = await axios.post('/recent_topics');
+        console.log(response.data);
+        setRecentTopics(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getRecentTopics();
+  }, []);
+
   return (
     <TopicContext.Provider
       value={{
@@ -73,6 +87,7 @@ export const TopicProvider = ({ children }) => {
         setDeepdiveData,
         quizData,
         setQuizData,
+        recentTopics,
       }}
     >
       {children}

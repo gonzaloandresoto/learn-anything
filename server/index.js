@@ -1,4 +1,5 @@
 const express = require('express');
+const { createClient } = require('@supabase/supabase-js');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -12,13 +13,20 @@ const corsOptions = {
   credentials: true,
 };
 
-const { OPENAI_API_KEY, METAPHOR_API_KEY } = require('./keys');
+const {
+  OPENAI_API_KEY,
+  METAPHOR_API_KEY,
+  SUPABASE_KEY,
+  SUPABASE_URL,
+} = require('./keys');
 const { log } = require('console');
 
 const app = express();
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
@@ -28,18 +36,19 @@ app.post('/search_concept', async (req, res) => {
   console.log('Getting concept from OpenAI');
   try {
     const { topic } = req.body;
+    console.log('TOPIC', topic);
     const responses = [
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. Write a very short 3 sentence summary on the topic given to you. After, list the 4 main concepts/aspects to learn about the given topic and summarize the details relevant to them in 5 sentences. Finally, write a google search query to help find the most relevant information this topic for further reading.',
+          'Your response should be in JSON format. Write a very short 3 sentence summary on the topic given to you. After, list the 4 main concepts/aspects to learn about the given topic and summarize the details relevant to them in 8 sentences. Finally, write a google search query to help find the most relevant information this topic for further reading.',
       },
       {
         role: 'user',
         content:
           'I want to learn about ' +
           topic +
-          '. Use the following schema for your response: { "summary": "", "topics": [name: "", summary: ""], [name: "", summary: ""], [name: "", summary: ""], [name: "", summary: ""], "search_query": ""  }',
+          '. Use the following schema for your response: { "title": "", "summary": "", "topics": [name: "", summary: ""], [name: "", summary: ""], [name: "", summary: ""], [name: "", summary: ""], "search_query": ""  }',
       },
     ];
     let openAIResponse = await openai.chat.completions.create({
@@ -71,6 +80,20 @@ app.post('/search_concept', async (req, res) => {
     }
     openAIResponse.metaphorResults = metaphorResults;
     console.log('OPEN AI RESPONSE', openAIResponse);
+
+    if (openAIResponse) {
+      try {
+        console.log('Adding topic to Supabase');
+        const { data, error } = await supabase
+          .from('topics')
+          .insert({ topic_contents: openAIResponse.choices[0].message.content })
+          .select('*');
+
+        if (error) throw error;
+      } catch (error) {
+        console.log('SUPABASE ERROR', error);
+      }
+    }
     res.json(openAIResponse);
   } catch (error) {
     console.log('OPENAI ERROR', error);
@@ -90,7 +113,7 @@ app.post('/quiz_topic', async (req, res) => {
       },
       {
         role: 'user',
-        content: `I want to learn about ${activeTopic}, ${topic}. Use the following schema for your response: {
+        content: `I want to learn about ${activeTopic} with respect to ${topic}. Don't be general, focus on the subject of the topic. Use the following schema for your response: {
               "quiz_title": "",
               "questions": [
                 {
@@ -228,6 +251,20 @@ app.post('/deepdive_topic', async (req, res) => {
     console.log('OPENAI ERROR', error);
   }
   console.log('✅ DONE WITH OPEN AI DEEPDIVE ✅');
+});
+
+app.post('/recent_topics', async (req, res) => {
+  try {
+    console.log('Getting recent topics from Supabase');
+    const { data, error } = await supabase
+      .from('topics')
+      .select('topic_contents');
+    if (error) throw error;
+    res.json(data);
+  } catch (error) {
+    console.log('SUPABASE ERROR', error);
+  }
+  console.log('✅ DONE GETTING TOPICS FROM SUPABASE ✅');
 });
 
 app.listen(8000, () => console.log('Server running on port 8000'));
