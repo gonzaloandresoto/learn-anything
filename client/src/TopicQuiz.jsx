@@ -9,6 +9,7 @@ function TopicQuiz() {
   const [activeQuestion, setActiveQuestion] = useState(1);
   const [quizScore, setQuizScore] = useState(0);
   const maxScore = quizData?.questions?.length;
+  const userScore = quizScore * 10;
 
   return (
     <div className='w-screen h-screen flex justify-center bg-white'>
@@ -22,6 +23,18 @@ function TopicQuiz() {
         <p className='text-3xl text-primary-black font-medium'>
           {quizData?.quiz_title}
         </p>
+
+        <div className='w-[640px] flex items-center justify-between'>
+          <div>
+            <p>
+              Question {activeQuestion} / {maxScore}
+            </p>
+          </div>
+
+          <div>
+            <p>{userScore} xp</p>
+          </div>
+        </div>
 
         <div className='w-[640px]'>
           {quizData?.questions?.map((item, index) => {
