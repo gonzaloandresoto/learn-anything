@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useTopicContext from './useTopicContext';
+import QuizQuestion from './QuizQuestion';
 
 function TopicQuiz() {
   const navigate = useNavigate();
   const { quizData } = useTopicContext();
   const [activeQuestion, setActiveQuestion] = useState(1);
   const [quizScore, setQuizScore] = useState(0);
+  const maxScore = quizData?.questions?.length;
+
   return (
     <div className='w-screen h-screen flex justify-center bg-white'>
       <div className='relative w-2/3 flex flex-col items-center gap-8 py-16'>
@@ -20,37 +23,19 @@ function TopicQuiz() {
           {quizData?.quiz_title}
         </p>
 
-        <div className='w-[600px]'>
-          {quizData?.questions?.map((item) => {
+        <div className='w-[640px]'>
+          {quizData?.questions?.map((item, index) => {
             if (activeQuestion === parseInt(item.id))
               return (
-                <div
-                  key={item.id}
-                  class='flex flex-col gap-2'
-                >
-                  <p className='text-lg text-primary-black font-medium'>
-                    {item?.question}
-                  </p>
-                  <div className='flex flex-col gap-2'>
-                    {item?.options?.map((option) => {
-                      return (
-                        <div
-                          key={option.id}
-                          className='px-2 py-2 bg-tertiary-grey rounded-md cursor-pointer'
-                        >
-                          <p>🔘 {option.text}</p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                  <button
-                    onClick={() => setActiveQuestion(activeQuestion + 1)}
-                    className='py-2 bg-secondary-indigo text-white text-base font-semibold rounded-md'
-                  >
-                    Continue
-                  </button>
-                  <div></div>
-                </div>
+                <QuizQuestion
+                  key={index}
+                  item={item}
+                  activeQuestion={activeQuestion}
+                  setActiveQuestion={setActiveQuestion}
+                  quizScore={quizScore}
+                  setQuizScore={setQuizScore}
+                  maxScore={maxScore}
+                />
               );
           })}
         </div>

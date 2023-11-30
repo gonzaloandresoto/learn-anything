@@ -92,7 +92,7 @@ function Home() {
             <p className='text-xl text-primary-black font-medium'>
               {activeTopic && activeTopic}
             </p>
-            <p className='text-base text-primary-black font-regular'>
+            <p className='text-base text-primary-black font-regular text-right'>
               {activeTopic &&
                 briefSummary?.topics?.find((item) => item.name === activeTopic)
                   ?.summary}
@@ -122,28 +122,27 @@ function Home() {
 
         <div className='flex flex-col gap-4'>
           <p className='text-xl text-primary-black font-medium'>Fun Links</p>
-          <p className='text-base text-primary-black font-regular'>
-            {funLinks?.map((item, index) => (
-              <div
-                key={index}
-                className='flex items-center justify-between hover:text-primary-indigo hover:underline'
+
+          {funLinks?.map((item, index) => (
+            <div
+              key={index}
+              className='flex items-center justify-between text-base text-primary-black font-regular hover:text-primary-indigo hover:underline'
+            >
+              <a
+                href={item.url}
+                target='_blank'
+                className='w-[600px]'
               >
-                <a
-                  href={item.url}
-                  target='_blank'
-                  className='w-[600px]'
-                >
-                  {item.title}
-                </a>
-                <a
-                  href={item.url}
-                  target='_blank'
-                >
-                  {item.author}
-                </a>
-              </div>
-            ))}
-          </p>
+                {item.title}
+              </a>
+              <a
+                href={item.url}
+                target='_blank'
+              >
+                {item.author}
+              </a>
+            </div>
+          ))}
         </div>
       </div>
     </div>
