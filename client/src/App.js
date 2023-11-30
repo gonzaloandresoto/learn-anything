@@ -3,42 +3,33 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import Home from './Home';
 import TopicDeepdive from './TopicDeepdive';
+import TopicQuiz from './TopicQuiz';
+import { TopicProvider } from './TopicContext';
 
 function App() {
-  const [deepdiveData, setDeepdiveData] = useState([]);
-  const [quizData, setQuizData] = useState([]);
-  console.log('TOPIC FOR DEEPDIVE', quizData);
   return (
-    <div>
+    <div className='flex w-screen h-screen'>
       <Router>
-        <Routes>
-          <Route
-            path='/'
-            element={
-              <Home
-                deepdiveData={deepdiveData}
-                setDeepdiveData={setDeepdiveData}
-                quizData={quizData}
-                setQuizData={setQuizData}
-              />
-            }
-          />
-          <Route
-            path='/home'
-            element={
-              <Home
-                deepdiveData={deepdiveData}
-                setDeepdiveData={setDeepdiveData}
-                quizData={quizData}
-                setQuizData={setQuizData}
-              />
-            }
-          />
-          <Route
-            path='/topic-deepdive'
-            element={<TopicDeepdive />}
-          />
-        </Routes>
+        <TopicProvider>
+          <Routes>
+            <Route
+              path='/'
+              element={<Home />}
+            />
+            <Route
+              path='/home'
+              element={<Home />}
+            />
+            <Route
+              path='/topic-deepdive'
+              element={<TopicDeepdive />}
+            />
+            <Route
+              path='/topic-quiz'
+              element={<TopicQuiz />}
+            />
+          </Routes>
+        </TopicProvider>
       </Router>
     </div>
   );

@@ -1,50 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import useTopicContext from './useTopicContext';
 
-function Home({ quizData, setQuizData }) {
-  const [topic, setTopic] = useState('');
-  const [briefSummary, setBriefSummary] = useState({});
-  const [activeTopic, setActiveTopic] = useState('');
-  const [funLinks, setFunLinks] = useState([]);
+axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.withCredentials = true;
+
+function Home() {
+  const {
+    searchTopic,
+    deepdiveIntoTopic,
+    quizAboutTopic,
+    topic,
+    setTopic,
+    briefSummary,
+    activeTopic,
+    setActiveTopic,
+    funLinks,
+  } = useTopicContext();
 
   const handleChange = (e) => {
     setTopic(e.target.value);
-  };
-  const searchTopic = async () => {
-    try {
-      console.log('Sent search to DB');
-      const res = await axios.post('/search_concept', { topic });
-      console.log(res?.data?.choices?.[0]?.message?.content);
-      setBriefSummary(JSON.parse(res?.data?.choices?.[0]?.message?.content));
-      setActiveTopic(
-        JSON.parse(res?.data?.choices?.[0]?.message?.content)?.topics?.[0]?.name
-      );
-      setFunLinks(res?.data?.metaphorResults);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deepdiveIntoTopic = async (topic, activeTopic) => {
-    try {
-      console.log('Sent deepdive to DB');
-      const res = await axios.post('/deepdive_topic', { topic, activeTopic });
-      console.log(res?.data?.choices?.[0]?.message?.content);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const quizAboutTopic = async (topic, activeTopic) => {
-    try {
-      console.log('Sent deepdive to DB');
-      const res = await axios.post('/quiz_topic', { topic, activeTopic });
-      console.log(res?.data?.choices?.[0]?.message?.content);
-      setQuizData(JSON.parse(res?.data?.choices?.[0]?.message?.content));
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -77,9 +53,10 @@ function Home({ quizData, setQuizData }) {
             </p>
             <p>{briefSummary?.summary}</p>
             <div className='flex flex-col gap-2'>
-              {briefSummary?.topics?.map((item) => {
+              {briefSummary?.topics?.map((item, index) => {
                 return (
                   <div
+                    key={index}
                     onClick={() => setActiveTopic(item.name)}
                     className={`flex justify-between px-3 py-2 rounded-md cursor-pointer ${
                       activeTopic === item?.name
@@ -146,8 +123,11 @@ function Home({ quizData, setQuizData }) {
         <div className='flex flex-col gap-4'>
           <p className='text-xl text-primary-black font-medium'>Fun Links</p>
           <p className='text-base text-primary-black font-regular'>
-            {funLinks.map((item) => (
-              <div className='flex items-center justify-between hover:text-primary-indigo hover:underline'>
+            {funLinks?.map((item, index) => (
+              <div
+                key={index}
+                className='flex items-center justify-between hover:text-primary-indigo hover:underline'
+              >
                 <a
                   href={item.url}
                   target='_blank'

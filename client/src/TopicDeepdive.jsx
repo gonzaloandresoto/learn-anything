@@ -1,6 +1,6 @@
 import React from 'react';
 
-function TopicDeepdive({ deepdiveData, setDeepdiveData }) {
+function TopicDeepdive() {
   return <div></div>;
 }
 
