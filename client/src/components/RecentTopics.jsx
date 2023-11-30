@@ -2,11 +2,14 @@ import React from 'react';
 import useTopicContext from '../useTopicContext';
 
 function RecentTopics() {
-  const { recentTopics, setBriefSummary, setActiveTopic } = useTopicContext();
+  const { recentTopics, setBriefSummary, setActiveTopic, setFunLinks } =
+    useTopicContext();
 
-  const handleClick = (topic) => {
+  const handleClick = (topic, links) => {
     setBriefSummary(topic);
     setActiveTopic(topic?.topics?.[0]?.name);
+    setFunLinks(links);
+    console.log(links);
   };
 
   return (
@@ -20,7 +23,9 @@ function RecentTopics() {
           return (
             <button
               key={index}
-              onClick={() => handleClick(JSON.parse(item.topic_contents))}
+              onClick={() =>
+                handleClick(JSON.parse(item.topic_contents), item.fun_links)
+              }
               className='px-4 py-4 border border-secondary-grey rounded-lg'
             >
               <p className='text-sm text-priamry-grey font-medium'>

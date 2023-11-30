@@ -86,7 +86,10 @@ app.post('/search_concept', async (req, res) => {
         console.log('Adding topic to Supabase');
         const { data, error } = await supabase
           .from('topics')
-          .insert({ topic_contents: openAIResponse.choices[0].message.content })
+          .insert({
+            topic_contents: openAIResponse.choices[0].message.content,
+            fun_links: openAIResponse.metaphorResults,
+          })
           .select('*');
 
         if (error) throw error;
@@ -258,7 +261,8 @@ app.post('/recent_topics', async (req, res) => {
     console.log('Getting recent topics from Supabase');
     const { data, error } = await supabase
       .from('topics')
-      .select('topic_contents');
+      .select('topic_contents, fun_links')
+      .order('created_at', { ascending: false });
     if (error) throw error;
     res.json(data);
   } catch (error) {

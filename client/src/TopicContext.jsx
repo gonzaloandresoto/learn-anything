@@ -60,7 +60,6 @@ export const TopicProvider = ({ children }) => {
     const getRecentTopics = async () => {
       try {
         const response = await axios.post('/recent_topics');
-        console.log(response.data);
         setRecentTopics(response.data);
       } catch (error) {
         console.log(error);

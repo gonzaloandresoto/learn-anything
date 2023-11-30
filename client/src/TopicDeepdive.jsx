@@ -21,9 +21,12 @@ function TopicDeepdive() {
         </p>
         <p>{deepdiveData.overview}</p>
         <div className='flex flex-col gap-8'>
-          {deepdiveData?.sections?.map((section) => {
+          {deepdiveData?.sections?.map((section, index) => {
             return (
-              <div className='flex flex-col gap-4'>
+              <div
+                key={index}
+                className='flex flex-col gap-4'
+              >
                 <div className='flex flex-col gap-2'>
                   <p className='text-xl text-primary-indigo font-medium'>
                     {section.title}
@@ -31,9 +34,9 @@ function TopicDeepdive() {
                   <p>{section.description}</p>
                 </div>
                 <div className='flex flex-col gap-1'>
-                  {section.subsections.map((subsection) => {
+                  {section.subsections.map((subsection, subIndex) => {
                     return (
-                      <div>
+                      <div key={subIndex}>
                         <p className='text-lg text-primary-black font-medium'>
                           {subsection.subTitle}
                         </p>
