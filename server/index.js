@@ -160,4 +160,74 @@ app.post('/quiz_topic', async (req, res) => {
   console.log('✅ DONE WITH OPEN AI QUIZ ✅');
 });
 
+app.post('/deepdive_topic', async (req, res) => {
+  try {
+    console.log('Getting quiz from OpenAI');
+    const { topic, activeTopic } = req.body;
+    const responses = [
+      {
+        role: 'system',
+        content:
+          'Your response should be in JSON format. You are a successful textbook author and blogger. Create a document that covers the topic given to you. Write a detailed overview, outline sections within it, and write a conclusion. Within each section, write a title, description, and subsections. Within each subsection, write a title and content.',
+      },
+      {
+        role: 'user',
+        content: `I want to do a deepdive about ${activeTopic} , ${topic}. Use the following schema for your response: {
+          "topic": "",
+          "overview": "",
+          "sections": [
+            {
+              "title": "",
+              "description": "",
+              "subsections": [
+                {
+                  "subTitle": "",
+                  "content": ""
+                },
+                {
+                  "subTitle": "",
+                  "content": ""
+                },
+                {
+                  "subTitle": "",
+                  "content": ""
+                }
+              ]
+            },
+            {
+              "title": "",
+              "description": "",
+              "subsections": [
+                {
+                  "subTitle": "",
+                  "content": ""
+                },
+                {
+                  "subTitle": "",
+                  "content": ""
+                },
+                {
+                  "subTitle": "",
+                  "content": ""
+                }
+              ]
+            }
+          ],
+          "conclusion": ""
+        }`,
+      },
+    ];
+    let openAIResponse = await openai.chat.completions.create({
+      messages: responses,
+      model: 'gpt-3.5-turbo-1106',
+      response_format: { type: 'json_object' },
+    });
+    console.log(openAIResponse.choices[0].message.content);
+    res.json(openAIResponse);
+  } catch (error) {
+    console.log('OPENAI ERROR', error);
+  }
+  console.log('✅ DONE WITH OPEN AI DEEPDIVE ✅');
+});
+
 app.listen(8000, () => console.log('Server running on port 8000'));

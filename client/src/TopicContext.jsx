@@ -36,6 +36,8 @@ export const TopicProvider = ({ children }) => {
       console.log('Sent deepdive to DB');
       const res = await axios.post('/deepdive_topic', { topic, activeTopic });
       console.log(res?.data?.choices?.[0]?.message?.content);
+      setDeepdiveData(JSON.parse(res?.data?.choices?.[0]?.message?.content));
+      navigate('/topic-deepdive');
     } catch (error) {
       console.log(error);
     }
