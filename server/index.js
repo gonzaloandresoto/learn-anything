@@ -78,4 +78,81 @@ app.post('/search_concept', async (req, res) => {
   console.log('✅ DONE WITH OPEN AI #1 ✅');
 });
 
+app.post('/quiz_topic', async (req, res) => {
+  try {
+    console.log('Getting quiz from OpenAI');
+    const { topic, activeTopic } = req.body;
+    const responses = [
+      {
+        role: 'system',
+        content:
+          'Your response should be in JSON format. Create a quiz with 5 questions and answers relevant to the topic given to you. The questions should be multiple choice and the answers should have a correct choice.',
+      },
+      {
+        role: 'user',
+        content: `I want to learn about ${activeTopic}, ${topic}. Use the following schema for your response: {
+              "quiz_title": "",
+              "questions": [
+                {
+                  "question": "",
+                  "options": [
+                    { "id": "", "text": "" },
+                    { "id": "", "text": "" },
+                    { "id": "", "text": "" }
+                  ],
+                  "correctAnswer": ""
+                },
+                {
+                  "question": "",
+                  "options": [
+                    { "id": "", "text": "" },
+                    { "id": "", "text": "" },
+                    { "id": "", "text": "" }
+                  ],
+                  "correctAnswer": ""
+                },
+                {
+                  "question": "",
+                  "options": [
+                    { "id": "", "text": "" },
+                    { "id": "", "text": "" },
+                    { "id": "", "text": "" }
+                  ],
+                  "correctAnswer": ""
+                },
+                {
+                  "question": "",
+                  "options": [
+                    { "id": "", "text": "" },
+                    { "id": "", "text": "" },
+                    { "id": "", "text": "" }
+                  ],
+                  "correctAnswer": ""
+                },
+                {
+                  "question": "",
+                  "options": [
+                    { "id": "", "text": "" },
+                    { "id": "", "text": "" },
+                    { "id": "", "text": "" }
+                  ],
+                  "correctAnswer": ""
+                }
+              ]
+            }`,
+      },
+    ];
+    let openAIResponse = await openai.chat.completions.create({
+      messages: responses,
+      model: 'gpt-3.5-turbo-1106',
+      response_format: { type: 'json_object' },
+    });
+    console.log(openAIResponse.choices[0].message.content);
+    res.json(openAIResponse);
+  } catch (error) {
+    console.log('OPENAI ERROR', error);
+  }
+  console.log('✅ DONE WITH OPEN AI QUIZ ✅');
+});
+
 app.listen(8000, () => console.log('Server running on port 8000'));
