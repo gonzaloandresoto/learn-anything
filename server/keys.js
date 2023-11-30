@@ -1,3 +1,4 @@
 module.exports = {
   OPENAI_API_KEY: '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',
+  METAPHOR_API_KEY: '268c9b58-b6a3-487b-8092-2a3ff5aa9b76',
 };
