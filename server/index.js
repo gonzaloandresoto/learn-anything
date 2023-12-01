@@ -10,6 +10,7 @@ const sdk = require('api')('@metaphorapi/v1.0#a4v1t517lp7k31vq');
 const { CohereClient } = require('cohere-ai');
 require('dotenv').config();
 const { log } = require('console');
+console.log('LIVE');
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const METAPHOR_API_KEY = process.env.METAPHOR_API_KEY;
