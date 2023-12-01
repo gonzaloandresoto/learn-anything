@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 axios.defaults.baseURL =
-  'Learn-server-env.eba-ccaeixae.us-east-2.elasticbeanstalk.com';
+  'http://Learn-server-env.eba-ccaeixae.us-east-2.elasticbeanstalk.com';
 axios.defaults.withCredentials = true;
 
 const TopicContext = createContext({});
