@@ -2,8 +2,7 @@ import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-axios.defaults.baseURL =
-  'https://Learn-server-env.eba-ccaeixae.us-east-2.elasticbeanstalk.com';
+axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
 axios.defaults.withCredentials = true;
 
 const TopicContext = createContext({});
