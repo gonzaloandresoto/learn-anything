@@ -2,7 +2,8 @@ import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL =
+  'Learn-server-env.eba-ccaeixae.us-east-2.elasticbeanstalk.com ';
 axios.defaults.withCredentials = true;
 
 const TopicContext = createContext({});
@@ -68,6 +69,15 @@ export const TopicProvider = ({ children }) => {
     getRecentTopics();
   }, []);
 
+  const getKeywords = async (paragraph) => {
+    try {
+      const res = await axios.post('/extract_keywords', { paragraph });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <TopicContext.Provider
       value={{
@@ -87,6 +97,7 @@ export const TopicProvider = ({ children }) => {
         quizData,
         setQuizData,
         recentTopics,
+        getKeywords,
       }}
     >
       {children}

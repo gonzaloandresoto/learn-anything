@@ -7,19 +7,21 @@ const querystring = require('querystring');
 const OpenAI = require('openai');
 const axios = require('axios');
 const sdk = require('api')('@metaphorapi/v1.0#a4v1t517lp7k31vq');
+const { CohereClient } = require('cohere-ai');
+require('dotenv').config();
+const { log } = require('console');
+
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+const METAPHOR_API_KEY = process.env.METAPHOR_API_KEY;
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_KEY;
+const COHERE_KEY = process.env.COHERE_KEY;
+const PORT = process.env.PORT || 8000;
 
 const corsOptions = {
   origin: true,
   credentials: true,
 };
-
-const {
-  OPENAI_API_KEY,
-  METAPHOR_API_KEY,
-  SUPABASE_KEY,
-  SUPABASE_URL,
-} = require('./keys');
-const { log } = require('console');
 
 const app = express();
 app.use(cors(corsOptions));
@@ -32,6 +34,10 @@ const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
 });
 
+const cohere = new CohereClient({
+  token: COHERE_KEY,
+});
+
 app.post('/search_concept', async (req, res) => {
   console.log('Getting concept from OpenAI');
   try {
@@ -41,7 +47,7 @@ app.post('/search_concept', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. Write a very short 3 sentence summary on the topic given to you. After, list the 4 main concepts/aspects to learn about the given topic and summarize the details relevant to them in 8 sentences. Finally, write a google search query to help find the most relevant information this topic for further reading.',
+          'Your response should be in JSON format. Write a concise 6 sentence summary on the topic given to you. After, list the 4 main concepts/aspects to learn about the given topic and summarize the details relevant to them in 8 sentences. Finally, write a google search query to help find the most relevant information this topic for further reading.',
       },
       {
         role: 'user',
@@ -271,4 +277,19 @@ app.post('/recent_topics', async (req, res) => {
   console.log('✅ DONE GETTING TOPICS FROM SUPABASE ✅');
 });
 
-app.listen(8000, () => console.log('Server running on port 8000'));
+app.post('/extract_keywords', async (req, res) => {
+  try {
+    console.log('Getting keywords from Cohere');
+    const { paragraph } = req.body;
+    const cohereResponse = await cohere.generate({
+      prompt: `Extract the keywords from the following paragraph and return them in an array format: ${paragraph}`,
+    });
+    console.log('COHERE RESPONSE', cohereResponse);
+    res.json(cohereResponse);
+  } catch (error) {
+    console.log('COHERE ERROR', error);
+  }
+  console.log('✅ DONE WITH COHERE ✅');
+});
+
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

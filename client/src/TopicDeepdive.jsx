@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import useTopicContext from './useTopicContext';
 
 function TopicDeepdive() {
   const navigate = useNavigate();
+  const { deepdiveData, getKeywords } = useTopicContext();
 
-  const { deepdiveData } = useTopicContext();
+  useEffect(() => {
+    getKeywords(deepdiveData?.conclusion);
+  }, []);
+
   return (
     <div className='w-screen h-screen flex justify-center bg-white'>
       <div className='relative w-2/3 flex flex-col items-center gap-8 py-16 overflow-y-auto'>
