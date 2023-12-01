@@ -12509,7 +12509,7 @@
         });
       };
       (cn.defaults.baseURL =
-        'http://Learn-server-env.eba-ccaeixae.us-east-2.elasticbeanstalk.com'),
+        'https://Learn-server-env.eba-ccaeixae.us-east-2.elasticbeanstalk.com'),
         (cn.defaults.withCredentials = !0);
       const wn = function () {
         return (0, fn.jsx)('div', {
