@@ -1,11 +1,7 @@
-import axios from 'axios';
 import RelevantLinks from './components/RelevantLinks';
 import RecentTopics from './components/RecentTopics';
 import BriefSummary from './components/BriefSummary';
 import TopicSearch from './components/TopicSearch';
-
-axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.withCredentials = true;
 
 function Home() {
   return (
