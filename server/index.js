@@ -29,6 +29,8 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const openai = new OpenAI({
