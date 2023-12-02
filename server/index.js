@@ -19,14 +19,25 @@ const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const COHERE_KEY = process.env.COHERE_KEY;
 const PORT = process.env.PORT || 8000;
 
+// Allowing repsonse from localhost:3000 and VErcel deployment
+const whitelist = [
+  'http://localhost:3000',
+  'https://learn-anything-five.vercel.app/',
+];
 const corsOptions = {
-  origin: true,
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 };
 
 const app = express();
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
 
 app.get('/favicon.ico', (req, res) => res.status(204).end());
