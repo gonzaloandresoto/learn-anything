@@ -18,7 +18,7 @@ function RecentTopics() {
         {' '}
         Curated by Our Community
       </p>
-      <div class='grid grid-cols-3 gap-6'>
+      <div className='grid grid-cols-3 gap-6'>
         {recentTopics.map((item, index) => {
           return (
             <button

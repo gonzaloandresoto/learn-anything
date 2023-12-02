@@ -37,15 +37,14 @@ const openai = new OpenAI({
   apiKey: OPENAI_API_KEY,
 });
 
-const cohere = new CohereClient({
-  token: COHERE_KEY,
-});
+// const cohere = new CohereClient({
+//   token: COHERE_KEY,
+// });
 
 app.post('/search_concept', async (req, res) => {
   console.log('Getting concept from OpenAI');
   try {
     const { topic } = req.body;
-    console.log('TOPIC', topic);
     const responses = [
       {
         role: 'system',

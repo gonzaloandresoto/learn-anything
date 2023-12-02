@@ -2,7 +2,8 @@ import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
+// axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
+axios.defaults.baseURL = 'http://localhost:8000/';
 axios.defaults.withCredentials = true;
 
 const TopicContext = createContext({});
@@ -17,7 +18,7 @@ export const TopicProvider = ({ children }) => {
   const [recentTopics, setRecentTopics] = useState([]);
   const navigate = useNavigate();
 
-  const searchTopic = async () => {
+  const searchTopic = async (topic) => {
     try {
       console.log('Sent search to DB');
       const res = await axios.post('/search_concept', { topic });

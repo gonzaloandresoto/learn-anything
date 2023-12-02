@@ -6,9 +6,9 @@ import TopicSearch from './components/TopicSearch';
 function Home() {
   return (
     <div className='w-screen h-screen flex flex-col grow items-center bg-white'>
-      <div className='w-2/3 flex flex-col gap-12 py-16'>
-        <div className='flex justify-center'>
-          <div className='flex items-center gap-4 border border-secondary-grey rounded-md'>
+      <div className='w-full px-24 flex flex-col gap-12 pb-16'>
+        {/* <div className='flex justify-center'>
+          <div className='flex items-center border border-secondary-grey rounded-md'>
             <button
               className={`w-[104px] py-1 text-sm text-white font-medium bg-primary-indigo rounded-md`}
             >
@@ -20,7 +20,7 @@ function Home() {
               Me
             </button>
           </div>
-        </div>
+        </div> */}
         <TopicSearch />
         <BriefSummary />
 
