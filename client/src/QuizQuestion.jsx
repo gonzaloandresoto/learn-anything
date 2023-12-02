@@ -24,7 +24,7 @@ function QuizQuestion({
   return (
     <div
       key={item.id}
-      class='flex flex-col gap-4'
+      className='flex flex-col gap-4'
     >
       <p className='text-xl text-primary-black font-medium'>{item?.question}</p>
       <div className='flex flex-col gap-2'>

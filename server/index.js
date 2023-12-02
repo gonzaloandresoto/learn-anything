@@ -9,8 +9,12 @@ const axios = require('axios');
 const sdk = require('api')('@metaphorapi/v1.0#a4v1t517lp7k31vq');
 const { CohereClient } = require('cohere-ai');
 const { log } = require('console');
-console.log('LIVE');
 require('dotenv').config();
+const {
+  briefSummarySchema,
+  quizSchema,
+  deepdiveSchema,
+} = require('./responseSchemas');
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const METAPHOR_API_KEY = process.env.METAPHOR_API_KEY;
@@ -19,11 +23,13 @@ const SUPABASE_KEY = process.env.SUPABASE_KEY;
 const COHERE_KEY = process.env.COHERE_KEY;
 const PORT = process.env.PORT || 8000;
 
-// Allowing repsonse from localhost:3000 and VErcel deployment
+// Allowing repsonse from localhost:3000 and Vercel deployment
 const whitelist = [
   'http://localhost:3000',
   'https://learn-anything-five.vercel.app/',
 ];
+
+// Currently blocking server-to-server requests and REST tools
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -52,10 +58,47 @@ const openai = new OpenAI({
 //   token: COHERE_KEY,
 // });
 
-app.post('/search_concept', async (req, res) => {
-  console.log('Getting concept from OpenAI');
+const metaphorSearch = async (searchQuery) => {
   try {
+    console.log('USING METAPHOR SEARCH');
+    sdk.auth(METAPHOR_API_KEY);
+    const relevantArticles = await sdk.search({
+      query: searchQuery,
+      numResults: 5,
+      useAutoprompt: true,
+    });
+    return relevantArticles.data.results;
+  } catch (error) {
+    console.log('METAPHOR ERROR', error);
+  } finally {
+    console.log('✅ DONE WITH METAPHOR SEARCH ✅');
+  }
+};
+
+const saveSummarySupabase = async (topic, summary) => {
+  try {
+    console.log('ADDING SUMMARY TO SUPABASE');
+    const { data, error } = await supabase
+      .from('topics')
+      .insert({
+        topic_contents: openAIResponse.choices[0].message.content,
+        fun_links: openAIResponse.metaphorResults,
+      })
+      .select('*');
+
+    if (error) throw error;
+  } catch (error) {
+    console.log('SUPABASE ERROR', error);
+  } finally {
+    console.log('✅ ULOADED SUMMARY TO SUPABASE ✅');
+  }
+};
+
+app.post('/search_concept', async (req, res) => {
+  try {
+    console.log('GETTING SUMMARY');
     const { topic } = req.body;
+    const briefSummarySchemaString = JSON.stringify(briefSummarySchema);
     const responses = [
       {
         role: 'system',
@@ -67,7 +110,7 @@ app.post('/search_concept', async (req, res) => {
         content:
           'I want to learn about ' +
           topic +
-          '. Use the following schema for your response: { "title": "", "summary": "", "topics": [name: "", summary: ""], [name: "", summary: ""], [name: "", summary: ""], [name: "", summary: ""], "search_query": ""  }',
+          `. Use the following schema for your response: ${briefSummarySchemaString}`,
       },
     ];
     let openAIResponse = await openai.chat.completions.create({
@@ -76,57 +119,34 @@ app.post('/search_concept', async (req, res) => {
       response_format: { type: 'json_object' },
     });
     // console.log(openAIResponse.choices[0].message.content);
-    let metaphorResults = null;
     const searchQuery = JSON.parse(
       openAIResponse.choices[0].message.content
     ).search_query;
 
-    console.log('SEARCH QUERY', searchQuery);
-    // if (searchQuery) {
-    //   console.log('Using Metaphor to search:', searchQuery);
-    //   try {
-    //     sdk.auth(METAPHOR_API_KEY);
-    //     const relevantArticles = await sdk.search({
-    //       query: searchQuery,
-    //       numResults: 5,
-    //       useAutoprompt: true,
-    //     });
-    //     console.log('Retrieved these articles from Metaphor', relevantArticles);
-    //     metaphorResults = relevantArticles.data.results;
-    //   } catch (error) {
-    //     console.log('METAPHOR ERROR', error);
-    //   }
-    // }
-    // openAIResponse.metaphorResults = metaphorResults;
-    console.log('OPEN AI RESPONSE', openAIResponse);
+    let metaphorResults = null;
+    if (searchQuery) {
+      metaphorResults = metaphorSearch(searchQuery);
+    }
+
+    openAIResponse.metaphorResults = metaphorResults;
 
     if (openAIResponse) {
-      try {
-        console.log('Adding topic to Supabase');
-        const { data, error } = await supabase
-          .from('topics')
-          .insert({
-            topic_contents: openAIResponse.choices[0].message.content,
-            fun_links: openAIResponse.metaphorResults,
-          })
-          .select('*');
-
-        if (error) throw error;
-      } catch (error) {
-        console.log('SUPABASE ERROR', error);
-      }
+      saveSummarySupabase(openAIResponse);
     }
+
     res.json(openAIResponse);
   } catch (error) {
     console.log('OPENAI ERROR', error);
+  } finally {
+    console.log('✅ DONE WITH SUMMARY ✅');
   }
-  console.log('✅ DONE WITH OPEN AI #1 ✅');
 });
 
 app.post('/quiz_topic', async (req, res) => {
   try {
-    console.log('Getting quiz from OpenAI');
+    console.log('GETTING QUIZ');
     const { topic, activeTopic } = req.body;
+    const quizSchemaString = JSON.stringify(quizSchema);
     const responses = [
       {
         role: 'system',
@@ -135,82 +155,28 @@ app.post('/quiz_topic', async (req, res) => {
       },
       {
         role: 'user',
-        content: `I want to learn about ${activeTopic} with respect to ${topic}. Don't be general, focus on the subject of the topic. Use the following schema for your response: {
-              "quiz_title": "",
-              "questions": [
-                {
-                  "question": "",
-                  id: "",
-                  "options": [
-                    { "id": "", "text": "" },
-                    { "id": "", "text": "" },
-                    { "id": "", "text": "" }
-                  ],
-                  "correctAnswer": ""
-                },
-                {
-                  "question": "",
-                  id: "",
-                  "options": [
-                    { "id": "", "text": "" },
-                    { "id": "", "text": "" },
-                    { "id": "", "text": "" }
-                  ],
-                  "correctAnswer": ""
-                },
-                {
-                  "question": "",
-                  id: "",
-                  "options": [
-                    { "id": "", "text": "" },
-                    { "id": "", "text": "" },
-                    { "id": "", "text": "" }
-                  ],
-                  "correctAnswer": ""
-                },
-                {
-                  "question": "",
-                  id: "",
-                  "options": [
-                    { "id": "", "text": "" },
-                    { "id": "", "text": "" },
-                    { "id": "", "text": "" }
-                  ],
-                  "correctAnswer": ""
-                },
-                {
-                  "question": "",
-                  id: "",
-                  "options": [
-                    { "id": "", "text": "" },
-                    { "id": "", "text": "" },
-                    { "id": "", "text": "" }
-                  ],
-                  "correctAnswer": ""
-                }
-              ]
-            }`,
+        content: `I want to learn about ${activeTopic} with respect to ${topic}. Don't be general, focus on the subject of the topic. Use the following schema for your response: ${quizSchemaString}`,
       },
     ];
+
     let openAIResponse = await openai.chat.completions.create({
       messages: responses,
       model: 'gpt-3.5-turbo-1106',
       response_format: { type: 'json_object' },
     });
-    console.log(openAIResponse.choices[0].message.content);
     res.json(openAIResponse);
   } catch (error) {
     console.log('OPENAI ERROR', error);
+  } finally {
+    console.log('✅ DONE WITH OPEN AI QUIZ ✅');
   }
-  console.log('✅ DONE WITH OPEN AI QUIZ ✅');
 });
 
 app.post('/deepdive_topic', async (req, res) => {
   try {
-    console.log('Getting quiz from OpenAI');
+    console.log('GETTING DEEPDIVE');
     const { topic, activeTopic } = req.body;
-    console.log('TOPIC', topic);
-    console.log('ACTIVE TOPIC', activeTopic);
+    const deepdiveSchemaString = JSON.stringify(deepdiveSchema);
     const responses = [
       {
         role: 'system',
@@ -219,49 +185,7 @@ app.post('/deepdive_topic', async (req, res) => {
       },
       {
         role: 'user',
-        content: `I want to do a deepdive about this subtopic: ${activeTopic} with respect to this topic: ${topic}. Use the following schema for your response: {
-          "topic": "",
-          "overview": "",
-          "sections": [
-            {
-              "title": "",
-              "description": "",
-              "subsections": [
-                {
-                  "subTitle": "",
-                  "content": ""
-                },
-                {
-                  "subTitle": "",
-                  "content": ""
-                },
-                {
-                  "subTitle": "",
-                  "content": ""
-                }
-              ]
-            },
-            {
-              "title": "",
-              "description": "",
-              "subsections": [
-                {
-                  "subTitle": "",
-                  "content": ""
-                },
-                {
-                  "subTitle": "",
-                  "content": ""
-                },
-                {
-                  "subTitle": "",
-                  "content": ""
-                }
-              ]
-            }
-          ],
-          "conclusion": ""
-        }`,
+        content: `I want to do a deepdive about this subtopic: ${activeTopic} with respect to this topic: ${topic}. Use the following schema for your response: ${deepdiveSchemaString}`,
       },
     ];
     let openAIResponse = await openai.chat.completions.create({
@@ -279,17 +203,20 @@ app.post('/deepdive_topic', async (req, res) => {
 
 app.post('/recent_topics', async (req, res) => {
   try {
-    console.log('Getting recent topics from Supabase');
+    console.log('GETTING RECENT TOPICS');
     const { data, error } = await supabase
       .from('topics')
       .select('topic_contents, fun_links')
       .order('created_at', { ascending: false });
+
     if (error) throw error;
+
     res.json(data);
   } catch (error) {
     console.log('SUPABASE ERROR', error);
+  } finally {
+    console.log('✅ DONE GETTING TOPICS FROM SUPABASE ✅');
   }
-  console.log('✅ DONE GETTING TOPICS FROM SUPABASE ✅');
 });
 
 // app.post('/extract_keywords', async (req, res) => {
