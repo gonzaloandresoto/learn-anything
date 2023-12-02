@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import RelevantLinks from './components/RelevantLinks';
 import RecentTopics from './components/RecentTopics';
 import BriefSummary from './components/summary/BriefSummary';
@@ -6,10 +6,13 @@ import TopicSearch from './components/TopicSearch';
 import useTopicContext from './useTopicContext';
 
 import Loader from './components/Loader';
+import SearchBar from './components/nav/SearchBar';
 
 function Home() {
   const { isLoading } = useTopicContext();
+  const [showSearchBar, setShowSearchBar] = useState(false);
   const briefSummaryRef = useRef(null);
+  const topicSearchRef = useRef(null);
 
   const scrollToBriefSummary = () => {
     if (briefSummaryRef.current) {
@@ -21,10 +24,33 @@ function Home() {
     }
   };
 
+  useEffect(() => {
+    const scrolledPastTopicSearch = () => {
+      if (topicSearchRef.current) {
+        const refBottom = topicSearchRef.current.getBoundingClientRect().bottom;
+        if (window.scrollY < refBottom) {
+          setShowSearchBar(false);
+        } else {
+          setShowSearchBar(true);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', scrolledPastTopicSearch);
+
+    return () => {
+      window.removeEventListener('scroll', scrolledPastTopicSearch);
+    };
+  }, []);
+
   return (
     <div className='w-screen h-screen flex flex-col grow items-center bg-white'>
-      <div className='w-full px-24 flex flex-col gap-12'>
-        <TopicSearch scrollToBriefSummary={scrollToBriefSummary} />
+      <div className='w-full px-24 flex flex-col items-center gap-12'>
+        {showSearchBar && <SearchBar />}
+        <TopicSearch
+          topicSearchRef={topicSearchRef}
+          scrollToBriefSummary={scrollToBriefSummary}
+        />
         <div className='w-full flex flex-col gap-20 pb-16'>
           <BriefSummary briefSummaryRef={briefSummaryRef} />
 

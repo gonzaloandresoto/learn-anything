@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useTopicContext from '../useTopicContext';
 
-function TopicSearch({ scrollToBriefSummary }) {
+function TopicSearch({ topicSearchRef, scrollToBriefSummary }) {
   const { searchTopic, topic, setTopic } = useTopicContext();
 
   useEffect(() => {
@@ -29,7 +29,10 @@ function TopicSearch({ scrollToBriefSummary }) {
     setTopic(e.target.value);
   };
   return (
-    <div className='w-full h-screen flex flex-col justify-center gap-4'>
+    <div
+      ref={topicSearchRef}
+      className='w-full h-screen flex flex-col justify-center gap-4'
+    >
       <p className='text-2xl text-primary-grey font-semibold'>
         I want to learn about...
       </p>

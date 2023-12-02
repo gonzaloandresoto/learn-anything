@@ -75,7 +75,7 @@ const metaphorSearch = async (searchQuery) => {
   }
 };
 
-const saveSummarySupabase = async (topic, summary) => {
+const saveSummarySupabase = async (openAIResponse) => {
   try {
     console.log('ADDING SUMMARY TO SUPABASE');
     const { data, error } = await supabase
@@ -103,7 +103,7 @@ app.post('/search_concept', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. Write a concise 6 sentence summary on the topic given to you. After, list the 4 main concepts/aspects to learn about the given topic and summarize the details relevant to them in 8 sentences. Finally, write a google search query to help find the most relevant information this topic for further reading.',
+          'Your response should be in JSON format. Write a concise summary on the topic given to you. After, list the 4 main concepts/aspects to learn about the given topic and concisely summarize the details relevant to them. Finally, write a google search query to help find the most relevant information this topic for further reading.',
       },
       {
         role: 'user',
@@ -123,12 +123,12 @@ app.post('/search_concept', async (req, res) => {
       openAIResponse.choices[0].message.content
     ).search_query;
 
-    let metaphorResults = null;
-    if (searchQuery) {
-      metaphorResults = metaphorSearch(searchQuery);
-    }
+    // let metaphorResults = null;
+    // if (searchQuery) {
+    //   metaphorResults = metaphorSearch(searchQuery);
+    // }
 
-    openAIResponse.metaphorResults = metaphorResults;
+    // openAIResponse.metaphorResults = metaphorResults;
 
     if (openAIResponse) {
       saveSummarySupabase(openAIResponse);
