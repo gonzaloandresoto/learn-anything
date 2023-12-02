@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useTopicContext from '../useTopicContext';
 
-function TopicSearch() {
+function TopicSearch({ scrollToBriefSummary }) {
   const { searchTopic, topic, setTopic } = useTopicContext();
 
   useEffect(() => {
@@ -19,6 +19,11 @@ function TopicSearch() {
     };
   }, []);
 
+  const submitSearch = (topic) => {
+    searchTopic(topic);
+    scrollToBriefSummary();
+  };
+
   const handleChange = (e) => {
     setTopic(e.target.value);
   };
@@ -35,7 +40,7 @@ function TopicSearch() {
           className='w-full text-7xl text-primary-black font-bold py-2 outline-none placeholder:text-primary-grey bg-white'
         />
         <button
-          onClick={() => searchTopic(topic)}
+          onClick={() => submitSearch(topic)}
           className='w-[48px] h-[48px] rounded-md bg-primary-indigo text-white text-xl font-bold'
         >
           →

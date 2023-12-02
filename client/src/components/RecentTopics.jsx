@@ -15,7 +15,6 @@ function RecentTopics() {
   return (
     <div className='w-full flex flex-col gap-4'>
       <p className='text-xl text-primary-black font-medium'>
-        {' '}
         Curated by Our Community
       </p>
       <div className='grid grid-cols-3 gap-6'>
