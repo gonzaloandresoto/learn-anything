@@ -19,12 +19,14 @@ function Home() {
 
   return (
     <div className='w-screen h-screen flex flex-col grow items-center bg-white'>
-      <div className='w-full px-24 flex flex-col gap-12 pb-16'>
+      <div className='w-full px-24 flex flex-col gap-12'>
         <TopicSearch scrollToBriefSummary={scrollToBriefSummary} />
-        <BriefSummary briefSummaryRef={briefSummaryRef} />
+        <div className='w-full flex flex-col gap-20 pb-16'>
+          <BriefSummary briefSummaryRef={briefSummaryRef} />
 
-        <RelevantLinks />
-        <RecentTopics />
+          {/* <RelevantLinks /> */}
+          <RecentTopics scrollToBriefSummary={scrollToBriefSummary} />
+        </div>
       </div>
     </div>
   );

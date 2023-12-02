@@ -3,7 +3,7 @@ import useTopicContext from '../../useTopicContext';
 import TopicButton from './TopicButton';
 
 function MainSummary() {
-  const { briefSummary, activeTopic, setActiveTopic } = useTopicContext();
+  const { briefSummary } = useTopicContext();
   return (
     <div className='w-1/2 h-[800px]'>
       <div className='flex flex-col gap-8 px-6 py-8'>
