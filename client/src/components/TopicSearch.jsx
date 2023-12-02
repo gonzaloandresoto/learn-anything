@@ -9,6 +9,7 @@ function TopicSearch({ scrollToBriefSummary }) {
       if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
         console.log('TOPIC KEYDOWN', topic);
         searchTopic(topic);
+        scrollToBriefSummary();
       }
     };
 
@@ -17,7 +18,7 @@ function TopicSearch({ scrollToBriefSummary }) {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [topic]);
 
   const submitSearch = (topic) => {
     searchTopic(topic);
