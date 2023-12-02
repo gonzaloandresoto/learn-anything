@@ -3,8 +3,12 @@ import RelevantLinks from './components/RelevantLinks';
 import RecentTopics from './components/RecentTopics';
 import BriefSummary from './components/summary/BriefSummary';
 import TopicSearch from './components/TopicSearch';
+import useTopicContext from './useTopicContext';
+
+import Loader from './components/Loader';
 
 function Home() {
+  const { isLoading } = useTopicContext();
   const briefSummaryRef = useRef(null);
 
   const scrollToBriefSummary = () => {
@@ -28,6 +32,12 @@ function Home() {
           <RecentTopics scrollToBriefSummary={scrollToBriefSummary} />
         </div>
       </div>
+
+      {isLoading && (
+        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[160px] h-[160px] flex items-center justify-center bg-tertiary-grey rounded-full border-2 border-secondary-grey'>
+          <Loader />
+        </div>
+      )}
     </div>
   );
 }
