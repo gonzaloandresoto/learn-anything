@@ -67,6 +67,7 @@ const metaphorSearch = async (searchQuery) => {
       query: searchQuery,
       numResults: 5,
       useAutoprompt: true,
+      includeDomains: ['www.youtube.com'],
     });
     return relevantArticles.data.results;
   } catch (error) {
@@ -78,12 +79,13 @@ const metaphorSearch = async (searchQuery) => {
 
 const saveSummarySupabase = async (openAIResponse) => {
   try {
-    console.log('ADDING SUMMARY TO SUPABASE');
+    console.log('ADDING SUMMARY TO SUPABASE', openAIResponse);
     const { data, error } = await supabase
       .from('topics')
       .insert({
-        topic_contents: openAIResponse.choices[0].message.content,
-        fun_links: openAIResponse.metaphorResults,
+        topic_contents: openAIResponse,
+        // topic_contents: openAIResponse.choices[0].message.content,
+        // fun_links: openAIResponse.metaphorResults,
       })
       .select('*');
 
@@ -93,6 +95,72 @@ const saveSummarySupabase = async (openAIResponse) => {
   } finally {
     console.log('✅ ULOADED SUMMARY TO SUPABASE ✅');
   }
+};
+
+const uploadThumbnailSupabase = async (thumbnail) => {
+  const base64Data = Buffer.from(thumbnail, 'base64');
+  const filePath = `thumbnail_${Date.now()}.png`;
+
+  try {
+    console.log('UPLOADING THUMBNAIL TO SUPABASE');
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('images')
+      .upload(filePath, base64Data, {
+        cacheControl: '3600',
+        upsert: false,
+      });
+
+    if (uploadError) throw error;
+
+    const { data: urlData, error: urlError } = await supabase.storage
+      .from('images')
+      .getPublicUrl(filePath);
+
+    if (urlError) throw urlError;
+
+    const publicUrl = urlData.publicUrl;
+
+    return publicUrl;
+  } catch (error) {
+    console.log('SUPABASE THUMBNAIL UPLOAD ERROR', error);
+  } finally {
+    console.log('✅ DONE UPLOADING THUMBNAIL TO SUPABASE ✅');
+  }
+};
+
+const generateThumbnail = async (topic, majorTopic) => {
+  console.log('TOPIC', topic);
+  console.log('MAJOR TOPIC', majorTopic);
+  try {
+    const imagePrompt = `${topic} with respect to ${majorTopic} in the style of minimalism.`;
+    let openAIResponse = await openai.images.generate({
+      model: 'dall-e-3',
+      prompt: imagePrompt,
+      n: 1,
+      size: '1024x1024',
+      response_format: 'b64_json',
+    });
+    const imageUrl = openAIResponse.data[0].b64_json;
+    const supabaseUrl = await uploadThumbnailSupabase(imageUrl);
+    return supabaseUrl;
+  } catch (error) {
+    console.log('IMAGE GENERATION ERROR', error);
+  }
+};
+
+const addThumbnailsToResponse = async (openAIResponse) => {
+  console.log('ADDING THUMBNAILS TO RESPONSE');
+  const openAIObject = JSON.parse(openAIResponse);
+  const majorTopic = openAIObject.title;
+  if (!openAIObject.topics) {
+    return false;
+  }
+
+  for (const topic of openAIObject.topics) {
+    topic.thumbnail = await generateThumbnail(topic.name, majorTopic);
+  }
+
+  return JSON.stringify(openAIObject);
 };
 
 app.post('/search_concept', async (req, res) => {
@@ -114,19 +182,25 @@ app.post('/search_concept', async (req, res) => {
           `. Use the following schema for your response: ${briefSummarySchemaString}`,
       },
     ];
-    let openAIResponse = await openai.chat.completions.create({
+    let openAIResponse1 = await openai.chat.completions.create({
       messages: responses,
       model: 'gpt-3.5-turbo-1106',
       response_format: { type: 'json_object' },
     });
     // console.log(openAIResponse.choices[0].message.content);
-    const searchQuery = `Here is a great Youtube video to learn about ${topic} and have it explained`;
 
-    let metaphorResults = null;
-    if (searchQuery) {
-      metaphorResults = await metaphorSearch(searchQuery);
-      console.log('METAPHOR RESULTS', metaphorResults);
-    }
+    const straightResponse = openAIResponse1.choices[0].message.content;
+    console.log('STRAIGHT RESPONSE', straightResponse);
+
+    const openAIResponse = await addThumbnailsToResponse(straightResponse);
+
+    const searchQuery = `Here is a great Youtube video explaining ${topic}`;
+
+    // let metaphorResults = null;
+    // if (searchQuery) {
+    //   metaphorResults = await metaphorSearch(searchQuery);
+    //   console.log('METAPHOR RESULTS', metaphorResults);
+    // }
 
     // openAIResponse.metaphorResults = metaphorResults;
 
