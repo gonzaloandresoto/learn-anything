@@ -6,7 +6,7 @@ function TopicButton({ item }) {
   return (
     <div
       onClick={() => setActiveTopic(item.name)}
-      className={`flex justify-between px-3 py-2 rounded-md cursor-pointer ${
+      className={`flex items-center justify-between px-3 py-2 rounded-md cursor-pointer ${
         activeTopic === item?.name ? 'bg-primary-indigo' : 'bg-secondary-indigo'
       }`}
     >

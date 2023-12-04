@@ -13,6 +13,7 @@ export const TopicProvider = ({ children }) => {
   const [briefSummary, setBriefSummary] = useState({});
   const [activeTopic, setActiveTopic] = useState('');
   const [funLinks, setFunLinks] = useState([]);
+  const [learningPlan, setLearningPlan] = useState([]);
   const [deepdiveData, setDeepdiveData] = useState([]);
   const [quizData, setQuizData] = useState([]);
   const [recentTopics, setRecentTopics] = useState([]);
@@ -30,12 +31,15 @@ export const TopicProvider = ({ children }) => {
         JSON.parse(res?.data?.choices?.[0]?.message?.content)?.topics?.[0]?.name
       );
       setFunLinks(res?.data?.metaphorResults);
+      setLearningPlan(res?.data?.learningPlan);
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
+
+  console.log('Learning Plan', learningPlan);
 
   const deepdiveIntoTopic = async (topic, activeTopic) => {
     try {

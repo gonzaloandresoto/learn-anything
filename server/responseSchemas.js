@@ -7,7 +7,6 @@ const briefSummarySchema = {
     { name: '', summary: '' },
     { name: '', summary: '' },
   ],
-  search_query: '',
 };
 
 const quizSchema = {
@@ -110,4 +109,37 @@ const deepdiveSchema = {
   conclusion: '',
 };
 
-module.exports = { briefSummarySchema, quizSchema, deepdiveSchema };
+const learningPlanSchema = [
+  {
+    step: '1',
+    concept: '',
+    summary: '',
+  },
+  {
+    step: '2',
+    concept: '',
+    summary: '',
+  },
+  {
+    step: '3',
+    concept: '',
+    summary: '',
+  },
+  {
+    step: '4',
+    concept: '',
+    summary: '',
+  },
+  {
+    step: '5',
+    concept: '',
+    summary: '',
+  },
+];
+
+module.exports = {
+  briefSummarySchema,
+  quizSchema,
+  deepdiveSchema,
+  learningPlanSchema,
+};

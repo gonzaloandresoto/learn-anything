@@ -14,6 +14,7 @@ const {
   briefSummarySchema,
   quizSchema,
   deepdiveSchema,
+  learningPlanSchema,
 } = require('./responseSchemas');
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
@@ -103,7 +104,7 @@ app.post('/search_concept', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. Write a concise summary on the topic given to you. After, list the 4 main concepts/aspects to learn about the given topic and concisely summarize the details relevant to them. Finally, write a google search query to help find the most relevant information this topic for further reading.',
+          'Your response should be in JSON format. Write a concise summary on the topic given to you. After, list the 4 main concepts/aspects to learn about the given topic and concisely summarize the details relevant to them.',
       },
       {
         role: 'user',
@@ -119,19 +120,38 @@ app.post('/search_concept', async (req, res) => {
       response_format: { type: 'json_object' },
     });
     // console.log(openAIResponse.choices[0].message.content);
-    const searchQuery = JSON.parse(
-      openAIResponse.choices[0].message.content
-    ).search_query;
+    const searchQuery = `Here is a great Youtube video to learn about ${topic} and have it explained`;
 
-    // let metaphorResults = null;
-    // if (searchQuery) {
-    //   metaphorResults = metaphorSearch(searchQuery);
-    // }
+    let metaphorResults = null;
+    if (searchQuery) {
+      metaphorResults = await metaphorSearch(searchQuery);
+      console.log('METAPHOR RESULTS', metaphorResults);
+    }
 
     // openAIResponse.metaphorResults = metaphorResults;
 
+    // const learningPlanSchemaString = JSON.stringify(learningPlanSchema);
+    // const responses2 = [
+    //   {
+    //     role: 'system',
+    //     content:
+    //       'Your response should be in JSON format. You are experienced in making learning plans in the likes of Duolingo. Create a a 5 step learning plan for the topic given to you. Each step should have a concept and a summary.',
+    //   },
+    //   {
+    //     role: 'user',
+    //     content: `.I want to learn about ${topic} Use the following schema for your response: ${learningPlanSchemaString}`,
+    //   },
+    // ];
+    // const openAIResponse2 = await openai.chat.completions.create({
+    //   messages: responses2,
+    //   model: 'gpt-3.5-turbo-1106',
+    //   response_format: { type: 'json_object' },
+    // });
+
+    // openAIResponse.learningPlan = openAIResponse2.choices[0].message.content;
+
     if (openAIResponse) {
-      saveSummarySupabase(openAIResponse);
+      await saveSummarySupabase(openAIResponse);
     }
 
     res.json(openAIResponse);
@@ -181,7 +201,7 @@ app.post('/deepdive_topic', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. You are a successful textbook author and blogger. Create a document that covers the sibtoopic with respect to the actove topic given to you. Write a detailed overview, outline TWO sections within it, and write a conclusion. Within each section, write a title, description, and subsections. Within each subsection, write a title and content.',
+          'Your response should be in JSON format. You are a successful textbook author and blogger. Create a document that covers the topic. Write a detailed overview, outline TWO sections within it, and write a conclusion. Within each section, write a title, description, and outline subsections about the given topic. Within each subsection, write a title and body explaining the subsection topic.',
       },
       {
         role: 'user',

@@ -7,6 +7,7 @@ import useTopicContext from './useTopicContext';
 
 import Loader from './components/Loader';
 import SearchBar from './components/nav/SearchBar';
+import LearningPLan from './components/plan/LearningPLan';
 
 function Home() {
   const { isLoading } = useTopicContext();
@@ -53,8 +54,8 @@ function Home() {
         />
         <div className='w-full flex flex-col gap-20 pb-16'>
           <BriefSummary briefSummaryRef={briefSummaryRef} />
-
-          {/* <RelevantLinks /> */}
+          <LearningPLan />
+          <RelevantLinks />
           <RecentTopics scrollToBriefSummary={scrollToBriefSummary} />
         </div>
       </div>
