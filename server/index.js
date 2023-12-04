@@ -79,13 +79,13 @@ const metaphorSearch = async (searchQuery) => {
 
 const saveSummarySupabase = async (openAIResponse) => {
   try {
-    console.log('ADDING SUMMARY TO SUPABASE', openAIResponse);
+    console.log('ADDING SUMMARY TO SUPABASE');
     const { data, error } = await supabase
       .from('topics')
       .insert({
-        topic_contents: openAIResponse,
+        topic_contents: openAIResponse.data,
         // topic_contents: openAIResponse.choices[0].message.content,
-        // fun_links: openAIResponse.metaphorResults,
+        fun_links: openAIResponse.metaphorResults,
       })
       .select('*');
 
@@ -98,6 +98,7 @@ const saveSummarySupabase = async (openAIResponse) => {
 };
 
 const uploadThumbnailSupabase = async (thumbnail) => {
+  return null;
   const base64Data = Buffer.from(thumbnail, 'base64');
   const filePath = `thumbnail_${Date.now()}.png`;
 
@@ -129,8 +130,7 @@ const uploadThumbnailSupabase = async (thumbnail) => {
 };
 
 const generateThumbnail = async (topic, majorTopic) => {
-  console.log('TOPIC', topic);
-  console.log('MAJOR TOPIC', majorTopic);
+  return null;
   try {
     const imagePrompt = `${topic} with respect to ${majorTopic} in the style of minimalism.`;
     let openAIResponse = await openai.images.generate({
@@ -149,7 +149,7 @@ const generateThumbnail = async (topic, majorTopic) => {
 };
 
 const addThumbnailsToResponse = async (openAIResponse) => {
-  console.log('ADDING THUMBNAILS TO RESPONSE');
+  // return null;
   const openAIObject = JSON.parse(openAIResponse);
   const majorTopic = openAIObject.title;
   if (!openAIObject.topics) {
@@ -160,7 +160,7 @@ const addThumbnailsToResponse = async (openAIResponse) => {
     topic.thumbnail = await generateThumbnail(topic.name, majorTopic);
   }
 
-  return JSON.stringify(openAIObject);
+  return openAIObject;
 };
 
 app.post('/search_concept', async (req, res) => {
@@ -182,47 +182,24 @@ app.post('/search_concept', async (req, res) => {
           `. Use the following schema for your response: ${briefSummarySchemaString}`,
       },
     ];
-    let openAIResponse1 = await openai.chat.completions.create({
+    let briefSummaryResponse = await openai.chat.completions.create({
       messages: responses,
       model: 'gpt-3.5-turbo-1106',
       response_format: { type: 'json_object' },
     });
-    // console.log(openAIResponse.choices[0].message.content);
 
-    const straightResponse = openAIResponse1.choices[0].message.content;
-    console.log('STRAIGHT RESPONSE', straightResponse);
+    const straightResponse = briefSummaryResponse.choices[0].message.content;
 
-    const openAIResponse = await addThumbnailsToResponse(straightResponse);
+    let openAIResponse = {};
+    openAIResponse.data = await addThumbnailsToResponse(straightResponse);
 
     const searchQuery = `Here is a great Youtube video explaining ${topic}`;
 
-    // let metaphorResults = null;
-    // if (searchQuery) {
-    //   metaphorResults = await metaphorSearch(searchQuery);
-    //   console.log('METAPHOR RESULTS', metaphorResults);
-    // }
-
-    // openAIResponse.metaphorResults = metaphorResults;
-
-    // const learningPlanSchemaString = JSON.stringify(learningPlanSchema);
-    // const responses2 = [
-    //   {
-    //     role: 'system',
-    //     content:
-    //       'Your response should be in JSON format. You are experienced in making learning plans in the likes of Duolingo. Create a a 5 step learning plan for the topic given to you. Each step should have a concept and a summary.',
-    //   },
-    //   {
-    //     role: 'user',
-    //     content: `.I want to learn about ${topic} Use the following schema for your response: ${learningPlanSchemaString}`,
-    //   },
-    // ];
-    // const openAIResponse2 = await openai.chat.completions.create({
-    //   messages: responses2,
-    //   model: 'gpt-3.5-turbo-1106',
-    //   response_format: { type: 'json_object' },
-    // });
-
-    // openAIResponse.learningPlan = openAIResponse2.choices[0].message.content;
+    let metaphorResults = null;
+    if (searchQuery) {
+      metaphorResults = await metaphorSearch(searchQuery);
+    }
+    openAIResponse.metaphorResults = metaphorResults;
 
     if (openAIResponse) {
       await saveSummarySupabase(openAIResponse);
@@ -329,3 +306,27 @@ app.post('/recent_topics', async (req, res) => {
 // });
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// console.log(openAIResponse.choices[0].message.content);
+
+// const learningPlanSchemaString = JSON.stringify(learningPlanSchema);
+// const responses2 = [
+//   {
+//     role: 'system',
+//     content:
+//       'Your response should be in JSON format. You are experienced in making learning plans in the likes of Duolingo. Create a a 5 step learning plan for the topic given to you. Each step should have a concept and a summary.',
+//   },
+//   {
+//     role: 'user',
+//     content: `.I want to learn about ${topic} Use the following schema for your response: ${learningPlanSchemaString}`,
+//   },
+// ];
+// const openAIResponse2 = await openai.chat.completions.create({
+//   messages: responses2,
+//   model: 'gpt-3.5-turbo-1106',
+//   response_format: { type: 'json_object' },
+// });
+
+// openAIResponse.learningPlan = openAIResponse2.choices[0].message.content;
+
+// let openAIResponse = JSON.stringify(openAIResponse3);

@@ -25,21 +25,16 @@ export const TopicProvider = ({ children }) => {
       console.log('Sent search to DB');
       setIsLoading(true);
       const res = await axios.post('/search_concept', { topic });
-      console.log(res?.data?.choices?.[0]?.message?.content);
-      setBriefSummary(JSON.parse(res?.data?.choices?.[0]?.message?.content));
-      setActiveTopic(
-        JSON.parse(res?.data?.choices?.[0]?.message?.content)?.topics?.[0]?.name
-      );
+      console.log(res?.data);
+      setBriefSummary(res?.data?.data);
+      setActiveTopic(res?.data?.data?.topics?.[0]?.name);
       setFunLinks(res?.data?.metaphorResults);
-      setLearningPlan(res?.data?.learningPlan);
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
-
-  console.log('Learning Plan', learningPlan);
 
   const deepdiveIntoTopic = async (topic, activeTopic) => {
     try {
@@ -74,8 +69,8 @@ export const TopicProvider = ({ children }) => {
   useEffect(() => {
     const getRecentTopics = async () => {
       try {
-        const response = await axios.post('/recent_topics');
-        setRecentTopics(response.data);
+        const res = await axios.post('/recent_topics');
+        setRecentTopics(res.data);
       } catch (error) {
         console.log(error);
       }

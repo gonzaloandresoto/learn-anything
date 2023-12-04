@@ -2,7 +2,7 @@ import React from 'react';
 import { json } from 'react-router-dom';
 
 function Topic({ item, handleClick }) {
-  const topicItem = JSON.parse(item?.topic_contents);
+  const topicItem = item?.topic_contents;
   return (
     <button
       onClick={() => handleClick(topicItem, item?.fun_links)}

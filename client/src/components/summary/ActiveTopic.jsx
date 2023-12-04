@@ -9,7 +9,6 @@ function ActiveTopic() {
     briefSummary,
     activeTopic,
   } = useTopicContext();
-  console.log(briefSummary);
   return (
     <div className='relative flex w-1/2 h-[800px] bg-tertiary-grey rounded-xl'>
       <img />
