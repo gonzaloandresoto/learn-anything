@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-// axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
+axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
 axios.defaults.baseURL = 'http://localhost:8000/';
 axios.defaults.withCredentials = true;
 
