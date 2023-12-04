@@ -12,7 +12,7 @@ class OpenAIClient {
 
   async generateResponse(messages, model = 'gpt-3.5-turbo-1106') {
     try {
-      const response = await this.client.chat.completions.create({
+      const response = await this.openai.chat.completions.create({
         messages: messages,
         model: model,
         response_format: { type: 'json_object' },
@@ -26,7 +26,7 @@ class OpenAIClient {
 
   async generateImage(prompt, model = 'dall-e-3') {
     try {
-      const response = await this.client.images.generate({
+      const response = await this.openai.images.generate({
         model: model,
         prompt: prompt,
         n: 1,

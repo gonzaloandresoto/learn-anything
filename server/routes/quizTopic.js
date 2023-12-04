@@ -3,7 +3,7 @@ const router = express.Router();
 const OpenAIClient = require('../utils/openaiClient');
 const { quizSchema } = require('../models/responseSchemas');
 
-router.post('/quiz_topic', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     console.log('GETTING QUIZ');
     const { topic, activeTopic } = req.body;

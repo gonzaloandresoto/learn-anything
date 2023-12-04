@@ -4,8 +4,14 @@ const OpenAIClient = require('../utils/openaiClient');
 const MetaphorClient = require('../utils/metaphorClient');
 const supabase = require('../utils/supabaseClient');
 const { briefSummarySchema } = require('../models/responseSchemas');
+const {
+  uploadThumbnailSupabase,
+  generateThumbnail,
+  addThumbnailsToResponse,
+} = require('../utils/thumbnailFunctions');
 
 const saveSummarySupabase = async (openAIResponse) => {
+  return null;
   try {
     console.log('ADDING SUMMARY TO SUPABASE');
     const { data, error } = await supabase
@@ -24,7 +30,7 @@ const saveSummarySupabase = async (openAIResponse) => {
   }
 };
 
-router.post('/search_concept', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     console.log('GETTING SUMMARY');
     const { topic } = req.body;
@@ -43,11 +49,7 @@ router.post('/search_concept', async (req, res) => {
           `. Use the following schema for your response: ${briefSummarySchemaString}`,
       },
     ];
-    let briefSummaryResponse = await openai.chat.completions.create({
-      messages: responses,
-      model: 'gpt-3.5-turbo-1106',
-      response_format: { type: 'json_object' },
-    });
+    let briefSummaryResponse = await OpenAIClient.generateResponse(responses);
 
     const straightResponse = briefSummaryResponse.choices[0].message.content;
 

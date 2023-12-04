@@ -3,7 +3,7 @@ const router = express.Router();
 const OpenAIClient = require('../utils/openaiClient');
 const { deepdiveSchema } = require('../models/responseSchemas');
 
-router.post('/deepdive_topic', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     console.log('GETTING DEEPDIVE');
     const { topic, activeTopic } = req.body;

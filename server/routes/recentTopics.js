@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const supabase = require('../utils/supabaseClient');
 
-router.post('/recent_topics', async (req, res) => {
+console.log('RECENT TOPICS ROUTE');
+
+router.get('/', async (req, res) => {
   try {
     console.log('GETTING RECENT TOPICS');
     const { data, error } = await supabase
