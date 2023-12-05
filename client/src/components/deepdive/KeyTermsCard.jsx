@@ -35,7 +35,7 @@ function KeyTermsCard({ term, definition }) {
       {showDefinition && (
         <div
           ref={cardRef}
-          className='absolute top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 w-[480px] h-max flex flex-col gap-2 py-6 px-8 bg-white rounded-lg shadow-md z-10'
+          className='absolute top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 w-[640px] h-max flex flex-col gap-2 py-6 px-8 bg-white rounded-xl shadow-md z-10'
         >
           <p className='text-2xl text-primary-black font-bold'>{term}</p>
           <p className='text-lg text-primary-black font-medium'>{definition}</p>

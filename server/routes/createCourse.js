@@ -9,12 +9,21 @@ const {
 } = require('../models/responseSchemas');
 
 const saveSummarySupabase = async (openAIResponse) => {
+  const title = openAIResponse.main.title;
+  const summary = openAIResponse.main.summary;
+  const body = openAIResponse.main.topics;
+  const keyTerms = openAIResponse.keyTerms;
+  const suggestedQuestions = openAIResponse.suggestedQuestions;
   try {
     console.log('ADDING SUMMARY TO SUPABASE');
     const { data, error } = await supabase
       .from('topics')
       .insert({
-        topic_contents: openAIResponse,
+        title: title,
+        summary: summary,
+        topic_contents: body,
+        key_terms: keyTerms,
+        suggested_questions: suggestedQuestions,
       })
       .select('*');
 
@@ -35,7 +44,7 @@ router.post('/', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. You are to create a course with multiple units on the given topic. Each unit will have a unit name, one sentence introduction, as well as a detailed explanantion on the unit with respect to the overall topic. This explanantion should be thorough and separated into two paragrpahs. The format and tone of the content is of the likes of Duolingo.',
+          'Your response should be in JSON format. Design a course consisting of multiple units on a chosen topic. Each unit should include a unit name and a detailed explanation written in the style of Duolingo and using simple language. The explanation should be comprehensive, divided into two paragraphs.',
       },
       {
         role: 'user',
@@ -60,7 +69,7 @@ router.post('/', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. You are to take the given topic, and generate six key terms and definitions for it.',
+          'Your response should be in JSON format. You are to take the given topic, and generate six key terms along with their definitions. I will not accept less than six.',
       },
       {
         role: 'user',

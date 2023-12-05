@@ -37,7 +37,8 @@ function Carousel({ parentRef }) {
             key={index}
             unit={subtopic.unit}
             introduction={subtopic.introduction}
-            content={subtopic.inDepthContent}
+            content1={subtopic.inDepthContent1}
+            content2={subtopic.inDepthContent2}
           />
         ))}
       </div>

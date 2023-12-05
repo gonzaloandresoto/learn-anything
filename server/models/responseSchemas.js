@@ -174,23 +174,32 @@ const prevCourseSchema = {
 
 const courseSchema = {
   title: '',
-  subtitle: '',
   summary: '',
   topics: [
     {
       unit: '',
-      introduction: '',
-      inDepthContent: '',
+      inDepthContent1: '',
+      inDepthContent2: '',
     },
     {
       unit: '',
-      introduction: '',
-      inDepthContent: '',
+      inDepthContent1: '',
+      inDepthContent2: '',
     },
     {
       unit: '',
-      introduction: '',
-      inDepthContent: '',
+      inDepthContent1: '',
+      inDepthContent2: '',
+    },
+    {
+      unit: '',
+      inDepthContent1: '',
+      inDepthContent2: '',
+    },
+    {
+      unit: '',
+      inDepthContent1: '',
+      inDepthContent2: '',
     },
   ],
 };
