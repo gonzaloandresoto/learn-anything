@@ -3,7 +3,7 @@ import CarouselTitleCard from './CarouselTitleCard';
 
 function Carousel() {
   return (
-    <div className='w-full h-max overflow-x-auto'>
+    <div className='flex-none w-full h-max overflow-x-auto'>
       <CarouselTitleCard />
     </div>
   );

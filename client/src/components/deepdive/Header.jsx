@@ -1,4 +1,5 @@
 import React from 'react';
+import Settings from '../../assets/settings.svg';
 
 function Header() {
   return (
@@ -16,7 +17,7 @@ function Header() {
       </div>
       <div className='flex w-[48px] h-[48px] bg-secondary-tan border border-primary-tan text-primary-tan rounded-md overflow-hidden'>
         <button className='w-full h-full flex items-center justify-center'>
-          ⭐️
+          <img src={Settings} />
         </button>
       </div>
     </div>
