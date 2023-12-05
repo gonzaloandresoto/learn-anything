@@ -35,6 +35,7 @@ function Carousel({ parentRef }) {
         {courseData?.topics?.map((subtopic, index) => (
           <CarouselCard
             key={index}
+            index={index}
             unit={subtopic.unit}
             introduction={subtopic.introduction}
             content1={subtopic.inDepthContent1}

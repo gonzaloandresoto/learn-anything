@@ -1,19 +1,25 @@
 import React from 'react';
+import AddSlide from './AddSlide';
 
-function CarouselCard({ unit, introduction, content1, content2 }) {
+function CarouselCard({ index, unit, introduction, content1, content2 }) {
   return (
-    <div className='flex-none max-w-[1080px] w-[1080px] h-full flex grow flex-col gap-8 items-center px-12 pt-12 bg-secondary-tan rounded-xl'>
+    <div className='relative flex-none max-w-[1080px] w-[1080px] h-full flex grow flex-col gap-8 items-center px-12 pt-12 bg-secondary-tan rounded-xl'>
       <p className='text-4xl text-primary-tan font-bold'>{unit}</p>
       <div className='w-1/3 h-[1px] flex bg-primary-tan'></div>
       <p className='text-xl text-primary-tan font-medium text-center'>
-        {introduction}
+        {introduction && introduction}
       </p>
       <p className='text-xl text-primary-tan font-medium text-center'>
-        {content1}
+        {content1 && content1}
       </p>
       <p className='text-xl text-primary-tan font-medium text-center'>
-        {content2}
+        {content2 && content2}
       </p>
+      <AddSlide
+        index={index}
+        content1={content1}
+        content2={content2}
+      />
     </div>
   );
 }

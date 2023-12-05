@@ -220,6 +220,16 @@ const suggestedQuestionsSchema = [
   { question: '' },
 ];
 
+const relevantQuestionsSchema = [{ question: '' }, { question: '' }];
+
+const newSlideSchema = [
+  {
+    unit: '',
+    inDepthContent1: '',
+    inDepthContent2: '',
+  },
+];
+
 module.exports = {
   briefSummarySchema,
   quizSchema,
@@ -228,4 +238,6 @@ module.exports = {
   courseSchema,
   keyTermsSchema,
   suggestedQuestionsSchema,
+  relevantQuestionsSchema,
+  newSlideSchema,
 };
