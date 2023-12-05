@@ -27,4 +27,17 @@ code {
   .smooth-scroll {
     scroll-behavior: smooth;
   }
+
+  .hide-scrollbar {
+    /* For Internet Explorer, Edge */
+    -ms-overflow-style: none;
+
+    /* For Firefox */
+    scrollbar-width: none;
+
+    /* For Chrome, Safari, Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }

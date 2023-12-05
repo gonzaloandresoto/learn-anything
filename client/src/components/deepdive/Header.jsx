@@ -3,7 +3,7 @@ import Settings from '../../assets/settings.svg';
 
 function Header() {
   return (
-    <div className='w-full h-max flex flex-row items-center justify-between py-4'>
+    <div className='max-w-[1080px] w-full h-max flex flex-row items-center justify-between py-4'>
       <div className='flex w-[48px] h-[48px] bg-primary-tan rounded-md overflow-hidden'>
         <button className='w-full h-full flex items-center justify-center text-white'>
           ←

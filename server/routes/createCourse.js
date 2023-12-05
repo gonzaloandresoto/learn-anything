@@ -35,7 +35,7 @@ router.post('/', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. You are to create a course with multiple units on the given topic. Each unit will have a sumary and multiple sections. Within each section, ther should be a thorough explanation. The format and tone of the content is of the likes of Duolingo.',
+          'Your response should be in JSON format. You are to create a course with multiple units on the given topic. Each unit will have a unit name, one sentence introduction, as well as a detailed explanantion on the unit with respect to the overall topic. This explanantion should be thorough and separated into two paragrpahs. The format and tone of the content is of the likes of Duolingo.',
       },
       {
         role: 'user',
@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. You are to take the given topic, and generate four key terms and definitions for it.',
+          'Your response should be in JSON format. You are to take the given topic, and generate six key terms and definitions for it.',
       },
       {
         role: 'user',

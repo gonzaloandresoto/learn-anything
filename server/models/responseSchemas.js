@@ -137,13 +137,14 @@ const learningPlanSchema = [
   },
 ];
 
-const courseSchema = {
+const prevCourseSchema = {
   title: '',
+  subtitle: '',
   summary: '',
   topics: [
     {
       unit: '',
-      summary: '',
+      introduction: '',
       sections: [
         { title: '', content: '' },
         { title: '', content: '' },
@@ -152,7 +153,7 @@ const courseSchema = {
     },
     {
       unit: '',
-      summary: '',
+      introduction: '',
       sections: [
         { title: '', content: '' },
         { title: '', content: '' },
@@ -161,12 +162,35 @@ const courseSchema = {
     },
     {
       unit: '',
-      summary: '',
+      introduction: '',
       sections: [
         { title: '', content: '' },
         { title: '', content: '' },
         { title: '', content: '' },
       ],
+    },
+  ],
+};
+
+const courseSchema = {
+  title: '',
+  subtitle: '',
+  summary: '',
+  topics: [
+    {
+      unit: '',
+      introduction: '',
+      inDepthContent: '',
+    },
+    {
+      unit: '',
+      introduction: '',
+      inDepthContent: '',
+    },
+    {
+      unit: '',
+      introduction: '',
+      inDepthContent: '',
     },
   ],
 };
