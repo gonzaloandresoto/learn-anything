@@ -19,7 +19,25 @@ export const TopicProvider = ({ children }) => {
   const [recentTopics, setRecentTopics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSidesheet, setShowSidesheet] = useState(false);
+
+  const [courseData, setCourseData] = useState(null);
+  const [keyTerms, setKeyTerms] = useState(null);
+  const [suggestedQuestions, setSuggestedQuestions] = useState(null);
   const navigate = useNavigate();
+
+  const createCourse = async (topic) => {
+    try {
+      console.log('Sent course to DB');
+      const res = await axios.post('/create_course', { topic });
+      console.log(res?.data);
+      setCourseData(res?.data?.main);
+      setKeyTerms(res?.data?.keyTerms);
+      setSuggestedQuestions(res?.data?.suggestedQuestions);
+      navigate('/deep-dive');
+    } catch (error) {
+      console.log('Error creating course:', error);
+    }
+  };
 
   const searchTopic = async (topic) => {
     try {
@@ -112,6 +130,13 @@ export const TopicProvider = ({ children }) => {
         setIsLoading,
         showSidesheet,
         setShowSidesheet,
+        courseData,
+        setCourseData,
+        keyTerms,
+        setKeyTerms,
+        suggestedQuestions,
+        setSuggestedQuestions,
+        createCourse,
       }}
     >
       {children}

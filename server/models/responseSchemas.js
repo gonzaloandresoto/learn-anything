@@ -137,9 +137,62 @@ const learningPlanSchema = [
   },
 ];
 
+const courseSchema = {
+  title: '',
+  summary: '',
+  topics: [
+    {
+      unit: '',
+      summary: '',
+      sections: [
+        { title: '', content: '' },
+        { title: '', content: '' },
+        { title: '', content: '' },
+      ],
+    },
+    {
+      unit: '',
+      summary: '',
+      sections: [
+        { title: '', content: '' },
+        { title: '', content: '' },
+        { title: '', content: '' },
+      ],
+    },
+    {
+      unit: '',
+      summary: '',
+      sections: [
+        { title: '', content: '' },
+        { title: '', content: '' },
+        { title: '', content: '' },
+      ],
+    },
+  ],
+};
+
+const keyTermsSchema = [
+  { term: '', definition: '' },
+  { term: '', definition: '' },
+  { term: '', definition: '' },
+  { term: '', definition: '' },
+  { term: '', definition: '' },
+  { term: '', definition: '' },
+];
+
+const suggestedQuestionsSchema = [
+  { question: '' },
+  { question: '' },
+  { question: '' },
+  { question: '' },
+];
+
 module.exports = {
   briefSummarySchema,
   quizSchema,
   deepdiveSchema,
   learningPlanSchema,
+  courseSchema,
+  keyTermsSchema,
+  suggestedQuestionsSchema,
 };

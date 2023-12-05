@@ -1,14 +1,21 @@
 import React from 'react';
 import KeyTermsCard from './KeyTermsCard';
+import useTopicContext from '../../useTopicContext';
 
 function KeyTerms() {
+  const { keyTerms } = useTopicContext();
   return (
     <div className='w-full h-max flex flex-col gap-4 bg-secondary-tan'>
       <p className='text-2xl text-primary-tan font-bold'>Key Terms</p>
       <div className='w-full h-max grid grid-cols-3 gap-4'>
-        <KeyTermsCard term={'Science Fiction'} />
-        <KeyTermsCard term={'Paradox'} />
-        <KeyTermsCard term={'Time Travel'} />
+        {keyTerms &&
+          keyTerms.map((term, index) => (
+            <KeyTermsCard
+              key={index}
+              term={term.term}
+              definition={term.definition}
+            />
+          ))}
       </div>
     </div>
   );

@@ -6,8 +6,21 @@ import AskInput from './AskInput';
 import KeyTerms from './KeyTerms';
 import SuggestedQuestions from './SuggestedQuestions';
 import Sidesheet from './Sidesheet';
+import useTopicContext from '../../useTopicContext';
 
 function Deepdive() {
+  const {
+    courseData,
+    setCourseData,
+    keyTerms,
+    setKeyTerms,
+    suggestedQuestions,
+    setSuggestedQuestions,
+  } = useTopicContext();
+
+  console.log(courseData);
+  console.log(keyTerms);
+  console.log(suggestedQuestions);
   return (
     <div className='w-screen h-screen flex grow justify-center bg-secondary-tan py-8 overflow-y-auto'>
       <div className='max-w-[1080px] h-max flex flex-col gap-8 grow items-center'>

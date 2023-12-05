@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import useTopicContext from '../useTopicContext';
 
 function TopicSearch({ topicSearchRef, scrollToBriefSummary }) {
-  const { searchTopic, topic, setTopic } = useTopicContext();
+  const { searchTopic, topic, setTopic, createCourse } = useTopicContext();
 
   useEffect(() => {
     const handleKeyDown = (event) => {
       if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
         console.log('TOPIC KEYDOWN', topic);
-        searchTopic(topic);
-        scrollToBriefSummary();
+        createCourse(topic);
+        // scrollToBriefSummary();
       }
     };
 
@@ -21,8 +21,8 @@ function TopicSearch({ topicSearchRef, scrollToBriefSummary }) {
   }, [topic]);
 
   const submitSearch = (topic) => {
-    searchTopic(topic);
-    scrollToBriefSummary();
+    createCourse(topic);
+    // scrollToBriefSummary();
   };
 
   const handleChange = (e) => {
