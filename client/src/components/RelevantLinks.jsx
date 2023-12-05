@@ -28,9 +28,9 @@ function RelevantLinks() {
             <div
               key={index}
               onClick={() => window.open(item.url, '_blank')}
-              className='w-[400px] flex flex-col flex-none gap-2 rounded-lg border border-secondary-grey cursor-pointer'
+              className='w-[400px] flex flex-col flex-none gap-2 rounded-lg border border-secondary-grey cursor-pointer overflow-hidden'
             >
-              <div className='w-full max-h-[200px] rounded-md overflow-none'>
+              <div className='w-full max-h-[200px]'>
                 <img
                   src={youtubeParser(item.url)}
                   className='w-full h-full object-cover'

@@ -9,19 +9,21 @@ function ActiveTopic() {
     briefSummary,
     activeTopic,
   } = useTopicContext();
+
+  const thumbnail =
+    activeTopic &&
+    briefSummary?.topics?.find((item) => item.name === activeTopic)?.thumbnail;
   return (
     <div className='relative flex w-1/2 h-[800px] bg-tertiary-grey rounded-xl'>
       <img />
       <div className='flex flex-col gap-6 px-6 py-8'>
         <div className='w-full h-[400px] bg-secondary-grey rounded-lg overflow-hidden'>
-          <img
-            src={
-              activeTopic &&
-              briefSummary?.topics?.find((item) => item.name === activeTopic)
-                ?.thumbnail
-            }
-            className='w-full h-full object-cover'
-          />
+          {thumbnail && (
+            <img
+              src={thumbnail}
+              className='w-full h-full rounded-lg object-cover'
+            />
+          )}
         </div>
         <div className='flex flex-col gap-4'>
           <p className='text-3xl text-primary-black font-medium'>

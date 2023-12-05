@@ -54,7 +54,6 @@ function Home() {
         />
         <div className='w-full flex flex-col gap-20 pb-16'>
           <BriefSummary briefSummaryRef={briefSummaryRef} />
-          <LearningPLan />
           <RelevantLinks />
           <RecentTopics scrollToBriefSummary={scrollToBriefSummary} />
         </div>
