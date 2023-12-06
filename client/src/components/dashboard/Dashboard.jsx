@@ -4,7 +4,7 @@ import CourseGrid from './CourseGrid';
 
 function Dashboard() {
   return (
-    <div className='w-full h-screen flex flex-col grow items-center px-4 bg-tertiary-tan'>
+    <div className='w-full h-screen flex flex-col grow items-center px-8 bg-tertiary-tan'>
       <div className='w-full h-[48px] bg-tertiary-tan'></div>
       <Search />
       <CourseGrid />

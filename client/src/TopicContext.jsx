@@ -101,6 +101,15 @@ export const TopicProvider = ({ children }) => {
     getUserCourses();
   }, []);
 
+  const makeActiveCourse = (course) => {
+    console.log('Making course active', course);
+    setCourseData(course);
+    setKeyTerms(course?.key_terms);
+    setSuggestedQuestions(course?.suggested_questions);
+    setCourseTopicId(course?.id);
+    navigate('/deep-dive');
+  };
+
   return (
     <TopicContext.Provider
       value={{
@@ -126,6 +135,7 @@ export const TopicProvider = ({ children }) => {
         activeCourseId,
         setCourseTopicId,
         userCourses,
+        makeActiveCourse,
       }}
     >
       {children}

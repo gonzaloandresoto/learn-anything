@@ -9,14 +9,6 @@ import Sidesheet from './Sidesheet';
 import useTopicContext from '../../useTopicContext';
 
 function Deepdive() {
-  const {
-    courseData,
-    setCourseData,
-    keyTerms,
-    setKeyTerms,
-    suggestedQuestions,
-    setSuggestedQuestions,
-  } = useTopicContext();
   const deepdiveRef = useRef(null);
 
   return (
