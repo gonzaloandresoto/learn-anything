@@ -19,13 +19,13 @@ function CourseCard({ course }) {
       ) : (
         <div className='w-full h-[196px] p-4 overflow-hidden bg-white'>
           <p className='text-lg text-primary-tan font-tertiary'>
-            {course.summary}
+            {course?.main?.summary}
           </p>
         </div>
       )}
 
       <div className='border-t border-secondary-tan px-4 py-4'>
-        <p className='text-xl font-bold '>{course?.title}</p>
+        <p className='text-xl font-bold '>{course?.main?.title}</p>
       </div>
     </button>
   );

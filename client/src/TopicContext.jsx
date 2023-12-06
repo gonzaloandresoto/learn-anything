@@ -65,6 +65,11 @@ export const TopicProvider = ({ children }) => {
         const updatedTopics = [...courseData.topics];
         updatedTopics.splice(indexBeforeAdd + 1, 0, res.data);
         setCourseData({ ...courseData, topics: updatedTopics });
+        console.log('Updated course data:', {
+          courseData,
+          topics: updatedTopics,
+        });
+        console.log('recent course id:', activeCourseId);
         updateCourseData(activeCourseId, {
           ...courseData,
           topics: updatedTopics,
@@ -78,7 +83,10 @@ export const TopicProvider = ({ children }) => {
   const updateCourseData = async (courseId, courseData) => {
     try {
       console.log('Sent updated course data to DB');
-      const res = await axios.post('/update_course_data', { userId: user?.id });
+      const res = await axios.post('/update_course_data', {
+        courseId,
+        courseData,
+      });
     } catch (error) {
       console.log('Error updating course data:', error);
     }
@@ -103,10 +111,12 @@ export const TopicProvider = ({ children }) => {
 
   const makeActiveCourse = (course) => {
     console.log('Making course active', course);
-    setCourseData(course);
-    setKeyTerms(course?.key_terms);
-    setSuggestedQuestions(course?.suggested_questions);
-    setCourseTopicId(course?.id);
+    console.log('course.main', course.main);
+    console.log('course?.key_terms', course?.keyTerms);
+    setCourseData(course.main);
+    setKeyTerms(course?.keyTerms);
+    setSuggestedQuestions(course?.suggestedQuestions);
+    setCourseTopicId(course?.Id);
     navigate('/deep-dive');
   };
 

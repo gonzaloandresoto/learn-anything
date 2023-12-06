@@ -11,7 +11,18 @@ const getUserCourses = async (userId) => {
 
     if (error) throw error;
 
-    return data;
+    const reformattedCourses = data.map((course) => {
+      const { id, key_terms, suggested_questions, ...mainContents } = course;
+
+      return {
+        Id: id,
+        main: mainContents,
+        keyTerms: key_terms,
+        suggestedQuestions: suggested_questions,
+      };
+    });
+
+    return reformattedCourses;
   } catch (error) {
     console.log('SUPABASE ERROR', error);
   }

@@ -21,7 +21,7 @@ const saveSummarySupabase = async (openAIResponse) => {
       .insert({
         title: title,
         summary: summary,
-        topic_contents: body,
+        topics: body,
         key_terms: keyTerms,
         suggested_questions: suggestedQuestions,
       })

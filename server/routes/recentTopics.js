@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     console.log('GETTING RECENT TOPICS');
     const { data, error } = await supabase
       .from('topics')
-      .select('topic_contents, fun_links')
+      .select('topics, fun_links')
       .order('created_at', { ascending: false });
 
     if (error) throw error;

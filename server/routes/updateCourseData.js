@@ -3,13 +3,16 @@ const router = express.Router();
 const supabase = require('../utils/supabaseClient');
 
 const updateSupabaseData = async (courseId, courseData) => {
+  console.log('COURSE ID', courseId);
+  console.log('COURSE DATA', courseData.topics);
+  const topics = courseData.topics;
   try {
     console.log('UPDATING COURSE DATA IN SUPABASE');
     const { data, error } = await supabase
       .from('courses')
       .upsert({
         id: courseId,
-        topic_contents: courseData,
+        topics: topics,
       })
       .select('*');
 
