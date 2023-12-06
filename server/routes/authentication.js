@@ -4,9 +4,12 @@ const supabase = require('../utils/supabaseClient');
 
 router.post('/check_session', async (req, res) => {
   try {
+    console.log('CHECKING SESSION');
     const token = req.cookies.token;
 
-    if (!token) return null;
+    if (!token) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
 
     const { data, error } = await supabase.auth.getUser(token);
 

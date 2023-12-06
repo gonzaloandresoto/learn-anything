@@ -10,7 +10,7 @@ function Home() {
 
   return (
     <div className='w-screen h-screen flex flex-col grow items-center bg-tertiary-tan'>
-      <div className='max-w-[1168px] w-full h-screen flex grow items-center'>
+      <div className='w-full h-screen flex grow items-center'>
         <Sidebar />
         <Dashboard />
       </div>

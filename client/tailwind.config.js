@@ -37,7 +37,13 @@ module.exports = {
       'secondary-tan': '#E7E1D2',
       'tertiary-tan': '#FAF8ED',
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        primary: ['Inter', 'sans-serif'],
+        secondary: ['Mukta', 'sans-serif'],
+        tertiary: ['"Nanum Myeongjo"', 'serif'],
+      },
+    },
   },
   plugins: [],
 };

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import useAuthContext from './hooks/useAuthContext';
 
 // axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
 axios.defaults.baseURL = 'http://localhost:8000';
@@ -9,6 +10,7 @@ axios.defaults.withCredentials = true;
 const TopicContext = createContext({});
 
 export const TopicProvider = ({ children }) => {
+  const { user } = useAuthContext();
   // V2 Onwards
   const [topic, setTopic] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +22,7 @@ export const TopicProvider = ({ children }) => {
   const [indexBeforeAdd, setIndexBeforeAdd] = useState(null);
   const [showSidesheet, setShowSidesheet] = useState(false);
   const [activeCourseId, setCourseTopicId] = useState(null);
+  const [userCourses, setUserCourses] = useState(null);
 
   const navigate = useNavigate();
 
@@ -75,14 +78,28 @@ export const TopicProvider = ({ children }) => {
   const updateCourseData = async (courseId, courseData) => {
     try {
       console.log('Sent updated course data to DB');
-      const res = await axios.post('/update_course_data', {
-        courseId,
-        courseData,
-      });
+      const res = await axios.post('/update_course_data', { userId: user?.id });
     } catch (error) {
       console.log('Error updating course data:', error);
     }
   };
+
+  useEffect(() => {
+    const getUserCourses = async () => {
+      try {
+        console.log('Sent request for user courses to DB');
+
+        const res = await axios.post('/user_courses', { userId: user?.id });
+
+        console.log(res?.data);
+        setUserCourses(res?.data);
+      } catch (error) {
+        console.log('Error getting user courses:', error);
+      }
+    };
+
+    getUserCourses();
+  }, []);
 
   return (
     <TopicContext.Provider
@@ -108,6 +125,7 @@ export const TopicProvider = ({ children }) => {
         setIndexBeforeAdd,
         activeCourseId,
         setCourseTopicId,
+        userCourses,
       }}
     >
       {children}

@@ -6,7 +6,7 @@ const updateSupabaseData = async (courseId, courseData) => {
   try {
     console.log('UPDATING COURSE DATA IN SUPABASE');
     const { data, error } = await supabase
-      .from('topics')
+      .from('courses')
       .upsert({
         id: courseId,
         topic_contents: courseData,

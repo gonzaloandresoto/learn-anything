@@ -29,13 +29,13 @@ function Search({ topicSearchRef }) {
   return (
     <div
       ref={topicSearchRef}
-      className='w-full h-max bg-tertiary-tan border-b border-primary-tan'
+      className='w-full h-max bg-tertiary-tan border-b border-secondary-tan'
     >
       <input
         value={topic}
         onChange={handleChange}
         placeholder='Learn about anything...'
-        className='w-full text-6xl text-primary-tan font-regular py-4 bg-tertiary-tan outline-none placeholder:text-primary-tan '
+        className='w-full text-4xl text-primary-tan font-semibold font-tertiary py-4 bg-tertiary-tan outline-none placeholder:text-primary-tan '
       />
     </div>
   );

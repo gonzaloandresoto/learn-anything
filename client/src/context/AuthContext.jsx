@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkSession = async () => {
+      console.log('Checking session');
       try {
         setIsAuthenticating(true);
         const res = await axios.post('/authentication/check_session');
@@ -59,7 +60,9 @@ export const AuthProvider = ({ children }) => {
 
   const signOut = async () => {
     try {
+      console.log('Signing out');
       await axios.post('/authentication/sign_out');
+      setUser(null);
     } catch (error) {
       console.log('Error signing out:', error);
     }
@@ -73,7 +76,7 @@ export const AuthProvider = ({ children }) => {
     );
 
   return (
-    <AuthContext.Provider value={{ user, setUser, signIn, signUp }}>
+    <AuthContext.Provider value={{ user, setUser, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -17,7 +17,7 @@ const saveSummarySupabase = async (openAIResponse) => {
   try {
     console.log('ADDING SUMMARY TO SUPABASE');
     const { data, error } = await supabase
-      .from('topics')
+      .from('courses')
       .insert({
         title: title,
         summary: summary,
