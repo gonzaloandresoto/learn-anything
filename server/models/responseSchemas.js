@@ -180,26 +180,31 @@ const courseSchema = {
       unit: '',
       inDepthContent1: '',
       inDepthContent2: '',
+      type: 'parent',
     },
     {
       unit: '',
       inDepthContent1: '',
       inDepthContent2: '',
+      type: 'parent',
     },
     {
       unit: '',
       inDepthContent1: '',
       inDepthContent2: '',
+      type: 'parent',
     },
     {
       unit: '',
       inDepthContent1: '',
       inDepthContent2: '',
+      type: 'parent',
     },
     {
       unit: '',
       inDepthContent1: '',
       inDepthContent2: '',
+      type: 'parent',
     },
   ],
 };
@@ -227,6 +232,7 @@ const newSlideSchema = [
     unit: '',
     inDepthContent1: '',
     inDepthContent2: '',
+    type: 'child',
   },
 ];
 

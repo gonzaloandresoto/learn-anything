@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. Design a course consisting of multiple units on a chosen topic. Each unit should include a unit name and a detailed explanation written in the style of Duolingo and using simple language. The explanation should be comprehensive, divided into two paragraphs.',
+          'Your response should be in JSON format. Design a summary document consisting of multiple units on a chosen topic. Each unit should include a unit name and a detailed explanation written in the style of Duolingo and using simple language. The explanation should be comprehensive, divided into two paragraphs. Assign the type parent to each unit.',
       },
       {
         role: 'user',

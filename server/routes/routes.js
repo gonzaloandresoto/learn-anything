@@ -9,6 +9,7 @@ const createCourse = require('./createCourse');
 const relevantQuestions = require('./relevantQuestions');
 const addSlide = require('./addSlide');
 const updateCourseData = require('./updateCourseData');
+const authentication = require('./authentication');
 
 router.use('/search_concept', searchConcept);
 router.use('/quiz_topic', quizTopic);
@@ -18,5 +19,6 @@ router.use('/create_course', createCourse);
 router.use('/relevant_questions', relevantQuestions);
 router.use('/add_slide', addSlide);
 router.use('/update_course_data', updateCourseData);
+router.use('/authentication', authentication);
 
 module.exports = router;

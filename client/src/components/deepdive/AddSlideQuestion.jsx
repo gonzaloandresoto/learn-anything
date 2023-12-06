@@ -1,11 +1,12 @@
 import React from 'react';
 import useTopicContext from '../../useTopicContext';
 
-function AddSlideQuestion({ question }) {
+function AddSlideQuestion({ question, setShowQuestions }) {
   const { addSlide } = useTopicContext();
 
   const handleClick = () => {
     addSlide(question.question);
+    setShowQuestions(false);
   };
 
   return (

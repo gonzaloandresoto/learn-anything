@@ -3,13 +3,14 @@ import AddSlideQuestion from './AddSlideQuestion';
 import useTopicContext from '../../useTopicContext';
 
 function AddSlideQuestionGroup({ setShowQuestions }) {
-  const { relevantQuestions } = useTopicContext();
+  const { relevantQuestions, setRelevantQuestions } = useTopicContext();
   const groupRef = useRef();
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (groupRef.current && !groupRef.current.contains(e.target)) {
         setShowQuestions(false);
+        setRelevantQuestions(false);
       }
     };
 
@@ -29,6 +30,7 @@ function AddSlideQuestionGroup({ setShowQuestions }) {
           <AddSlideQuestion
             key={index}
             question={question}
+            setShowQuestions={setShowQuestions}
           />
         ))}
     </div>
