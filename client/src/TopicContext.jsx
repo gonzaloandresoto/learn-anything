@@ -10,6 +10,7 @@ const TopicContext = createContext({});
 
 export const TopicProvider = ({ children }) => {
   // V2 Onwards
+  const [topic, setTopic] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [courseData, setCourseData] = useState(null);
   const [keyTerms, setKeyTerms] = useState(null);
@@ -18,6 +19,7 @@ export const TopicProvider = ({ children }) => {
   const [addedSlide, setAddedSlide] = useState(null);
   const [indexBeforeAdd, setIndexBeforeAdd] = useState(null);
   const [showSidesheet, setShowSidesheet] = useState(false);
+  const [activeCourseId, setCourseTopicId] = useState(null);
 
   const navigate = useNavigate();
 
@@ -30,6 +32,7 @@ export const TopicProvider = ({ children }) => {
       setCourseData(res?.data?.main);
       setKeyTerms(res?.data?.keyTerms);
       setSuggestedQuestions(res?.data?.suggestedQuestions);
+      setCourseTopicId(res?.data?.Id);
       setIsLoading(false);
       navigate('/deep-dive');
     } catch (error) {
@@ -59,15 +62,33 @@ export const TopicProvider = ({ children }) => {
         const updatedTopics = [...courseData.topics];
         updatedTopics.splice(indexBeforeAdd + 1, 0, res.data);
         setCourseData({ ...courseData, topics: updatedTopics });
+        updateCourseData(activeCourseId, {
+          ...courseData,
+          topics: updatedTopics,
+        });
       }
     } catch (error) {
       console.log('Error adding slide:', error);
     }
   };
 
+  const updateCourseData = async (courseId, courseData) => {
+    try {
+      console.log('Sent updated course data to DB');
+      const res = await axios.post('/update_course_data', {
+        courseId,
+        courseData,
+      });
+    } catch (error) {
+      console.log('Error updating course data:', error);
+    }
+  };
+
   return (
     <TopicContext.Provider
       value={{
+        topic,
+        setTopic,
         isLoading,
         setIsLoading,
         showSidesheet,
@@ -85,6 +106,8 @@ export const TopicProvider = ({ children }) => {
         addSlide,
         indexBeforeAdd,
         setIndexBeforeAdd,
+        activeCourseId,
+        setCourseTopicId,
       }}
     >
       {children}

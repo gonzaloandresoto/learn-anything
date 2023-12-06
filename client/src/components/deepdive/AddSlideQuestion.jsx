@@ -11,9 +11,11 @@ function AddSlideQuestion({ question }) {
   return (
     <button
       onClick={handleClick}
-      className='w-max px-6 py-2 bg-primary-tan text-secondary-tan text-sm font-medium rounded-full'
+      className='w-max px-4 py-2 bg-primary-tan rounded-lg'
     >
-      {question.question}
+      <p className='max-w-[720px] text-secondary-tan text-sm font-medium text-right'>
+        {question.question}
+      </p>
     </button>
   );
 }

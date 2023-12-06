@@ -19,9 +19,6 @@ function Deepdive() {
   } = useTopicContext();
   const deepdiveRef = useRef(null);
 
-  console.log(courseData);
-  console.log(keyTerms);
-  console.log(suggestedQuestions);
   return (
     <div className='w-screen h-screen flex flex-col gap-8 grow items-center bg-secondary-tan py-8 overflow-y-auto'>
       <Header />

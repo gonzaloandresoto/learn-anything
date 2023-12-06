@@ -11,7 +11,7 @@ router.post('/', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. Using the question as the topic, return an infromative slide with a unit title and indepth content split into two paragraphs about the unit.',
+          'Your response should be in JSON format. Using the question as the topic, return an informative slide with a short unit title and indepth content split into two very short and concise paragraphs about the unit in the style of duolingo.',
       },
       {
         role: 'user',

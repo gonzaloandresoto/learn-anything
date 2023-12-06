@@ -28,6 +28,10 @@ const saveSummarySupabase = async (openAIResponse) => {
       .select('*');
 
     if (error) throw error;
+
+    console.log('SUPABASE ID', data[0].id);
+    const supabaseId = data[0].id;
+    return supabaseId;
   } catch (error) {
     console.log('SUPABASE ERROR', error);
   } finally {
@@ -115,14 +119,21 @@ router.post('/', async (req, res) => {
       suggestedQuestionsMessages
     );
 
+    console.log(
+      'SUGGESTED QUESTIONS RESPONSE',
+      suggestedQuestionsResponse.choices[0].message.content
+    );
+
     openAIResponse.suggestedQuestions = JSON.parse(
       suggestedQuestionsResponse.choices[0].message.content
     ).questions;
 
+    let courseId = null;
     if (openAIResponse) {
-      await saveSummarySupabase(openAIResponse);
+      courseId = await saveSummarySupabase(openAIResponse);
     }
 
+    openAIResponse.Id = courseId;
     res.json(openAIResponse);
   } catch (error) {
     console.log('Error with /create_course', error);

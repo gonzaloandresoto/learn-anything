@@ -11,6 +11,7 @@ function AddSlide({ index, content1, content2 }) {
 
   const handleClick = () => {
     getRelevantQuestions(mergedParagraph);
+    console.log('MERGED PARAGRAPH', mergedParagraph);
     setIndexBeforeAdd(index);
     setShowQuestions(true);
   };

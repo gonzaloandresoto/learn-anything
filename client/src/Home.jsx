@@ -15,34 +15,34 @@ function Home() {
   const briefSummaryRef = useRef(null);
   const topicSearchRef = useRef(null);
 
-  const scrollToBriefSummary = () => {
-    if (briefSummaryRef.current) {
-      const elementRect = briefSummaryRef.current.getBoundingClientRect();
-      const absoluteElementTop = elementRect.top + window.scrollY;
-      const middle =
-        absoluteElementTop - window.innerHeight / 2 + elementRect.height / 2;
-      window.scrollTo({ top: middle, behavior: 'smooth' });
-    }
-  };
+  // const scrollToBriefSummary = () => {
+  //   if (briefSummaryRef.current) {
+  //     const elementRect = briefSummaryRef.current.getBoundingClientRect();
+  //     const absoluteElementTop = elementRect.top + window.scrollY;
+  //     const middle =
+  //       absoluteElementTop - window.innerHeight / 2 + elementRect.height / 2;
+  //     window.scrollTo({ top: middle, behavior: 'smooth' });
+  //   }
+  // };
 
-  useEffect(() => {
-    const scrolledPastTopicSearch = () => {
-      if (topicSearchRef.current) {
-        const refBottom = topicSearchRef.current.getBoundingClientRect().bottom;
-        if (window.scrollY < refBottom) {
-          setShowSearchBar(false);
-        } else {
-          setShowSearchBar(true);
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const scrolledPastTopicSearch = () => {
+  //     if (topicSearchRef.current) {
+  //       const refBottom = topicSearchRef.current.getBoundingClientRect().bottom;
+  //       if (window.scrollY < refBottom) {
+  //         setShowSearchBar(false);
+  //       } else {
+  //         setShowSearchBar(true);
+  //       }
+  //     }
+  //   };
 
-    window.addEventListener('scroll', scrolledPastTopicSearch);
+  //   window.addEventListener('scroll', scrolledPastTopicSearch);
 
-    return () => {
-      window.removeEventListener('scroll', scrolledPastTopicSearch);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('scroll', scrolledPastTopicSearch);
+  //   };
+  // }, []);
 
   return (
     <div className='w-screen h-screen flex flex-col grow items-center bg-white'>
@@ -50,13 +50,13 @@ function Home() {
         {showSearchBar && <SearchBar />}
         <TopicSearch
           topicSearchRef={topicSearchRef}
-          scrollToBriefSummary={scrollToBriefSummary}
+          // scrollToBriefSummary={scrollToBriefSummary}
         />
-        <div className='w-full flex flex-col gap-20 pb-16'>
+        {/* <div className='w-full flex flex-col gap-20 pb-16'>
           <BriefSummary briefSummaryRef={briefSummaryRef} />
           <RelevantLinks />
           <RecentTopics scrollToBriefSummary={scrollToBriefSummary} />
-        </div>
+        </div> */}
       </div>
 
       {isLoading && (
