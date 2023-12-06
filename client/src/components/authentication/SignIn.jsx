@@ -5,7 +5,7 @@ import FormInput from './FormInput';
 function SignIn() {
   const { signIn } = useAuthContext();
   return (
-    <div className='flex grow items-center justify-center bg-secondary-tan'>
+    <div className='flex grow items-center justify-center bg-tertiary-tan'>
       <FormInput
         greeting={'Welcome back'}
         CTA={'Sign in to your account'}

@@ -20,7 +20,7 @@ function Deepdive() {
   const deepdiveRef = useRef(null);
 
   return (
-    <div className='w-screen h-screen flex flex-col gap-8 grow items-center bg-secondary-tan py-8 overflow-y-auto'>
+    <div className='w-screen h-screen flex flex-col gap-8 grow items-center bg-tertiary-tan py-8 overflow-y-auto'>
       <Header />
       <Carousel parentRef={deepdiveRef} />
       <div

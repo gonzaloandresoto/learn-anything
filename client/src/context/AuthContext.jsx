@@ -20,8 +20,7 @@ export const AuthProvider = ({ children }) => {
       try {
         setIsAuthenticating(true);
         const res = await axios.post('/authentication/check_session');
-        console.log(res?.data);
-        setUser(res?.data);
+        setUser(res?.data?.user);
       } catch (error) {
         console.log('Error checking session:', error);
         setUser(null);
@@ -29,6 +28,7 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticating(false);
       }
     };
+    checkSession();
   }, []);
 
   const signIn = async (email, password) => {
@@ -37,8 +37,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      console.log(res?.data);
-      setUser(res?.data);
+      setUser(res?.data?.user);
       navigate('/home');
     } catch (error) {
       console.log('Error signing in:', error);
@@ -51,8 +50,7 @@ export const AuthProvider = ({ children }) => {
         email,
         password,
       });
-      console.log(res?.data);
-      setUser(res?.data);
+      setUser(res?.data?.user);
       navigate('/home');
     } catch (error) {
       console.log('Error signing in:', error);
@@ -75,7 +73,7 @@ export const AuthProvider = ({ children }) => {
     );
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, signIn, signUp }}>
       {children}
     </AuthContext.Provider>
   );

@@ -14,7 +14,7 @@ function AddSlideQuestion({ question, setShowQuestions }) {
       onClick={handleClick}
       className='w-max px-4 py-2 bg-primary-tan rounded-lg'
     >
-      <p className='max-w-[720px] text-secondary-tan text-sm font-medium text-right'>
+      <p className='max-w-[720px] text-tertiary-tan text-sm font-medium text-right'>
         {question.question}
       </p>
     </button>

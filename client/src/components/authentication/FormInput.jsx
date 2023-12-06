@@ -23,10 +23,16 @@ function FormInput({
       [name]: value,
     }));
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsAuthenticating(true);
+    authFunction(formFields.email, formFields.password);
+    setIsAuthenticating(false);
+  };
 
   return (
     <div>
-      <form onSubmit={authFunction}>
+      <form onSubmit={handleSubmit}>
         <div className='grid gap-2 py-12 px-10 gap-6 bg-primary-teal rounded-3xl'>
           <div>
             <p className='text-4xl text-tertiary-tan font-bold'>{greeting}</p>
@@ -73,7 +79,7 @@ function FormInput({
           <p className='text-tertiary-tan'>
             {fallbackCTA}{' '}
             <a
-              className='text-secondary-tan font-semibold underline cursor-pointer'
+              className='text-tertiary-tan font-semibold underline cursor-pointer'
               href={route}
             >
               {otherCTA}
