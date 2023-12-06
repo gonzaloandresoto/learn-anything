@@ -30,7 +30,10 @@ export const TopicProvider = ({ children }) => {
     try {
       setIsLoading(true);
       console.log('Sent course to DB');
-      const res = await axios.post('/create_course', { topic });
+      const res = await axios.post('/create_course', {
+        topic,
+        userId: user?.id,
+      });
       console.log(res?.data);
       setCourseData(res?.data?.main);
       setKeyTerms(res?.data?.keyTerms);
@@ -107,7 +110,7 @@ export const TopicProvider = ({ children }) => {
     };
 
     getUserCourses();
-  }, []);
+  }, [user?.id]);
 
   const makeActiveCourse = (course) => {
     console.log('Making course active', course);

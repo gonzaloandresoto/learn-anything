@@ -10,7 +10,7 @@ function AddSlideQuestionGroup({ setShowQuestions }) {
     const handleClickOutside = (e) => {
       if (groupRef.current && !groupRef.current.contains(e.target)) {
         setShowQuestions(false);
-        setRelevantQuestions(false);
+        setRelevantQuestions(null);
       }
     };
 

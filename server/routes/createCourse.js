@@ -8,7 +8,7 @@ const {
   suggestedQuestionsSchema,
 } = require('../models/responseSchemas');
 
-const saveSummarySupabase = async (openAIResponse) => {
+const saveSummarySupabase = async (openAIResponse, userId) => {
   const title = openAIResponse.main.title;
   const summary = openAIResponse.main.summary;
   const body = openAIResponse.main.topics;
@@ -19,6 +19,7 @@ const saveSummarySupabase = async (openAIResponse) => {
     const { data, error } = await supabase
       .from('courses')
       .insert({
+        user_id: userId,
         title: title,
         summary: summary,
         topics: body,
@@ -42,7 +43,7 @@ const saveSummarySupabase = async (openAIResponse) => {
 router.post('/', async (req, res) => {
   try {
     console.log('GETTING COURSE');
-    const { topic } = req.body;
+    const { topic, userId } = req.body;
     const courseSchemaString = JSON.stringify(courseSchema);
     const responses = [
       {
@@ -130,7 +131,7 @@ router.post('/', async (req, res) => {
 
     let courseId = null;
     if (openAIResponse) {
-      courseId = await saveSummarySupabase(openAIResponse);
+      courseId = await saveSummarySupabase(openAIResponse, userId);
     }
 
     openAIResponse.Id = courseId;
