@@ -34,7 +34,7 @@ function Search({ topicSearchRef }) {
         value={topic}
         onChange={handleChange}
         placeholder='Learn about anything...'
-        className='w-full text-4xl text-primary-tan font-semibold font-tertiary py-4 bg-tertiary-tan outline-none placeholder:text-primary-tan '
+        className='w-full text-4xl text-primary-black font-regular py-6 bg-tertiary-tan outline-none placeholder:text-primary-tan '
       />
     </div>
   );

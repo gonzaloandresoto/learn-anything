@@ -35,7 +35,7 @@ module.exports = {
       'secondary-teal': '#BDE3DE',
       'primary-tan': '#8E8A74',
       'secondary-tan': '#E7E1D2',
-      'tertiary-tan': '#FAF8ED',
+      'tertiary-tan': '#F0F0EA',
     },
     extend: {
       fontFamily: {

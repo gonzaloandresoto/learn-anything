@@ -7,25 +7,31 @@ function CourseCard({ course }) {
   const handleClick = () => {
     makeActiveCourse(course);
   };
+
+  const firstSentence = course?.main?.summary?.split('.')[0];
+
   return (
     <button
       onClick={handleClick}
-      className='w-full h-max bg-white rounded-2xl shadow-md cursor-pointer overflow-hidden text-left'
+      className='group w-full h-max bg-white rounded-2xl shadow-sm cursor-pointer overflow-hidden text-left border
+      border-secondary-grey'
     >
       {course.thumbnail ? (
         <div className='w-full hh-[168px]  overflow-hidden'>
           <img src={''} />
         </div>
       ) : (
-        <div className='w-full h-[196px] p-4 overflow-hidden bg-white'>
-          <p className='text-lg text-primary-tan font-tertiary'>
-            {course?.main?.summary}
+        <div className='w-full h-[188px] p-4 overflow-hidden bg-white'>
+          <p className='text-lg text-primary-black font-medium'>
+            "{firstSentence}."
           </p>
         </div>
       )}
 
-      <div className='border-t border-secondary-tan px-4 py-4'>
-        <p className='text-xl font-bold '>{course?.main?.title}</p>
+      <div className='border-t border-secondary-tan p-4'>
+        <p className='text-xl text-primary-black font-semibold font-secondary group-hover:text-primary-tan'>
+          {course?.main?.title}
+        </p>
       </div>
     </button>
   );

@@ -5,7 +5,7 @@ function CourseGrid() {
   const { userCourses } = useTopicContext();
 
   return (
-    <div className='w-full h-max grid grid-cols-3 gap-4 py-6'>
+    <div className='w-full h-max grid xl:grid-cols-4 lg:grid-cols-3 gap-8 py-8 overflow-y-auto'>
       {userCourses &&
         userCourses.map((course, index) => (
           <CourseCard

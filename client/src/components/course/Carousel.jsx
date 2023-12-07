@@ -51,9 +51,8 @@ function Carousel({ parentRef }) {
       <div className='w-max h-full flex flex-row gap-8 '>
         {courseData?.topics &&
           courseData?.topics?.map((subtopic, index) => (
-            <div>
+            <div key={index}>
               <CarouselCard
-                key={index}
                 index={index}
                 unit={subtopic.unit}
                 introduction={subtopic.introduction}

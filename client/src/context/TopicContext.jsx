@@ -42,7 +42,7 @@ export const TopicProvider = ({ children }) => {
       setSuggestedQuestions(res?.data?.suggestedQuestions);
       setCourseTopicId(res?.data?.Id);
       setIsLoading(false);
-      navigate('/deepdive');
+      navigate('/course');
     } catch (error) {
       console.log('Error creating course:', error);
     }
@@ -122,7 +122,7 @@ export const TopicProvider = ({ children }) => {
     setKeyTerms(course?.keyTerms);
     setSuggestedQuestions(course?.suggestedQuestions);
     setCourseTopicId(course?.Id);
-    navigate('/deep-dive');
+    navigate('/course');
   };
 
   const sendConversationMessage = async (message) => {
