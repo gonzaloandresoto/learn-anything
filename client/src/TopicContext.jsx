@@ -24,6 +24,7 @@ export const TopicProvider = ({ children }) => {
   const [activeCourseId, setCourseTopicId] = useState(null);
   const [userCourses, setUserCourses] = useState(null);
   const [focusedSlide, setFocusedSlide] = useState(null);
+  const [courseConversation, setCourseConversation] = useState(null);
 
   const navigate = useNavigate();
 
@@ -124,6 +125,35 @@ export const TopicProvider = ({ children }) => {
     navigate('/deep-dive');
   };
 
+  const sendConversationMessage = async (message) => {
+    try {
+      const userMessage = { role: 'user', content: message };
+      const newConversation = [...courseConversation, userMessage];
+
+      setCourseConversation(newConversation);
+      const res = await axios.post('/chat_course', {
+        conversation: newConversation,
+      });
+
+      const assistantMessage = { role: 'assistant', content: res?.data };
+      setCourseConversation((prevConversation) => [
+        ...prevConversation,
+        assistantMessage,
+      ]);
+    } catch (error) {
+      console.log('Error sending message:', error);
+    }
+  };
+
+  useEffect(() => {
+    setCourseConversation([
+      {
+        role: 'system',
+        content: `You are an expert in ${courseData?.title}. You are here to help the user learn about the topic they are interested in. Do not answer unrelated questions.`,
+      },
+    ]);
+  }, [courseData]);
+
   return (
     <TopicContext.Provider
       value={{
@@ -152,6 +182,9 @@ export const TopicProvider = ({ children }) => {
         makeActiveCourse,
         focusedSlide,
         setFocusedSlide,
+        courseConversation,
+        setCourseConversation,
+        sendConversationMessage,
       }}
     >
       {children}

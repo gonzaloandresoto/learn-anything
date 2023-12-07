@@ -9,7 +9,19 @@ import Sidesheet from './Sidesheet';
 import useTopicContext from '../../useTopicContext';
 
 function Deepdive() {
+  const { focusedSlide, setFocusedSlide, courseData } = useTopicContext();
   const deepdiveRef = useRef(null);
+  const slideCount = courseData?.topics?.length;
+
+  const increaseSlide = () => {
+    if (focusedSlide >= slideCount) return;
+    setFocusedSlide((prev) => prev + 1);
+  };
+
+  const decreaseSlide = () => {
+    if (focusedSlide === 0) return;
+    setFocusedSlide((prev) => prev - 1);
+  };
 
   return (
     <div className='w-screen h-screen flex flex-col gap-8 grow items-center bg-tertiary-tan py-8 overflow-y-auto'>
@@ -25,12 +37,18 @@ function Deepdive() {
 
           <div className='flex items-center gap-2'>
             <div className='flex-none w-[48px] h-[48px] bg-primary-tan rounded-full overflow-hidden'>
-              <button className='w-full h-full flex items-center justify-center text-medium text-tertiary-tan font-semibold'>
+              <button
+                onClick={decreaseSlide}
+                className='w-full h-full flex items-center justify-center text-medium text-tertiary-tan font-semibold'
+              >
                 ←
               </button>
             </div>
             <div className='flex-none w-[48px] h-[48px] bg-primary-tan rounded-full overflow-hidden'>
-              <button className='w-full h-full flex items-center justify-center text-medium text-tertiary-tan font-semibold'>
+              <button
+                onClick={increaseSlide}
+                className='w-full h-full flex items-center justify-center text-medium text-tertiary-tan font-semibold'
+              >
                 →
               </button>
             </div>

@@ -9,6 +9,18 @@ class OpenAIClient {
       apiKey: OPENAI_API_KEY,
     });
   }
+  async generateTextResponse(messages, model = 'gpt-3.5-turbo-1106') {
+    try {
+      const response = await this.openai.chat.completions.create({
+        messages: messages,
+        model: model,
+      });
+      return response;
+    } catch (error) {
+      console.error('Error in generating chat response:', error);
+      throw error;
+    }
+  }
 
   async generateResponse(messages, model = 'gpt-3.5-turbo-1106') {
     try {
