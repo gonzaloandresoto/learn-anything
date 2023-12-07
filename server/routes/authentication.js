@@ -9,9 +9,11 @@ router.post('/check_session', async (req, res) => {
 
     if (!token) {
       return res.status(401).json({ message: 'No token provided' });
+      console.log('No token provided');
     }
 
     const { data, error } = await supabase.auth.getUser(token);
+    console.log('DATA', data);
 
     if (error) throw error;
 

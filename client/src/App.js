@@ -10,6 +10,7 @@ import Home from './components/Home';
 import SignIn from './components/authentication/SignIn';
 import SignUp from './components/authentication/SignUp';
 import Course from './components/course/Course';
+import ProtectedRoutes from './ProtectedRoutes';
 
 function App() {
   return (
@@ -30,14 +31,16 @@ function App() {
                 path='/signup'
                 element={<SignUp />}
               />
-              <Route
-                path='/home'
-                element={<Home />}
-              />
-              <Route
-                path='/course'
-                element={<Course />}
-              />
+              <Route element={<ProtectedRoutes />}>
+                <Route
+                  path='/home'
+                  element={<Home />}
+                />
+                <Route
+                  path='/course'
+                  element={<Course />}
+                />
+              </Route>
             </Routes>
           </TopicProvider>
         </AuthProvider>

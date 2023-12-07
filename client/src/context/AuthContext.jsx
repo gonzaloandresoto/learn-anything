@@ -12,16 +12,16 @@ const AuthContext = createContext({});
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userDetails, setUserDetails] = useState(null);
-  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const checkSession = async () => {
       console.log('Checking session');
       try {
-        setIsAuthenticating(true);
         const res = await axios.post('/authentication/check_session');
         setUser(res?.data?.user);
+        console.log('Setting user success', res?.data?.user);
       } catch (error) {
         console.log('Error checking session:', error);
         setUser(null);
@@ -68,15 +68,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  if (isAuthenticating)
-    return (
-      <div className='flex grow justify-center items-center'>
-        <Loader />
-      </div>
-    );
-
   return (
-    <AuthContext.Provider value={{ user, setUser, signIn, signUp, signOut }}>
+    <AuthContext.Provider
+      value={{ user, setUser, signIn, signUp, signOut, isAuthenticating }}
+    >
       {children}
     </AuthContext.Provider>
   );
