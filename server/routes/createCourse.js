@@ -89,11 +89,6 @@ router.post('/', async (req, res) => {
       keyTermsMessages
     );
 
-    console.log(
-      'KEY TERMS RESPONSE',
-      keyTermsResponse.choices[0].message.content
-    );
-
     openAIResponse.keyTerms = JSON.parse(
       keyTermsResponse.choices[0].message.content
     ).terms;
@@ -118,11 +113,6 @@ router.post('/', async (req, res) => {
 
     let suggestedQuestionsResponse = await OpenAIClient.generateResponse(
       suggestedQuestionsMessages
-    );
-
-    console.log(
-      'SUGGESTED QUESTIONS RESPONSE',
-      suggestedQuestionsResponse.choices[0].message.content
     );
 
     openAIResponse.suggestedQuestions = JSON.parse(

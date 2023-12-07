@@ -9,6 +9,7 @@ import { TopicProvider } from './context/TopicContext';
 import Home from './components/Home';
 import SignIn from './components/authentication/SignIn';
 import SignUp from './components/authentication/SignUp';
+import Course from './components/course/Course';
 
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
               <Route
                 path='/home'
                 element={<Home />}
+              />
+              <Route
+                path='/course'
+                element={<Course />}
               />
             </Routes>
           </TopicProvider>

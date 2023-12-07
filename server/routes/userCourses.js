@@ -33,7 +33,6 @@ router.post('/', async (req, res) => {
     console.log('GETTING USER COURSES');
     const { userId } = req.body;
     const response = await getUserCourses(userId);
-    console.log('COURSE RESPONSES', response);
     res.send(response);
   } catch (error) {
     console.log('ERROR GETTING USER COURSES', error);

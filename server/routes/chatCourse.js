@@ -9,7 +9,6 @@ router.post('/', async (req, res) => {
     const openAIResponse = await OpenAIClient.generateTextResponse(
       conversation
     );
-    console.log(openAIResponse?.choices[0]?.message?.content);
     res.send(openAIResponse?.choices[0]?.message?.content);
   } catch (error) {
     console.log('ERROR GETTING CHAT RESPONSE', error);

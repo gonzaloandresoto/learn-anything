@@ -16,7 +16,7 @@ function Home() {
       </div>
 
       {isLoading && (
-        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[160px] h-[160px] flex items-center justify-center bg-tertiary-grey rounded-full border-2 border-secondary-grey'>
+        <div className='fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[160px] h-[160px] flex items-center justify-center bg-tertiary-tan rounded-full border-2 border-secondary-tan'>
           <Loader />
         </div>
       )}
@@ -25,45 +25,3 @@ function Home() {
 }
 
 export default Home;
-
-// const topicSearchRef = useRef(null);
-// topicSearchRef={topicSearchRef}
-// {showSearchBar && <SearchBar />}
-// scrollToBriefSummary={scrollToBriefSummary}
-
-// const scrollToBriefSummary = () => {
-//   if (briefSummaryRef.current) {
-//     const elementRect = briefSummaryRef.current.getBoundingClientRect();
-//     const absoluteElementTop = elementRect.top + window.scrollY;
-//     const middle =
-//       absoluteElementTop - window.innerHeight / 2 + elementRect.height / 2;
-//     window.scrollTo({ top: middle, behavior: 'smooth' });
-//   }
-// };
-
-// useEffect(() => {
-//   const scrolledPastTopicSearch = () => {
-//     if (topicSearchRef.current) {
-//       const refBottom = topicSearchRef.current.getBoundingClientRect().bottom;
-//       if (window.scrollY < refBottom) {
-//         setShowSearchBar(false);
-//       } else {
-//         setShowSearchBar(true);
-//       }
-//     }
-//   };
-
-//   window.addEventListener('scroll', scrolledPastTopicSearch);
-
-//   return () => {
-//     window.removeEventListener('scroll', scrolledPastTopicSearch);
-//   };
-// }, []);
-
-{
-  /* <div className='w-full flex flex-col gap-20 pb-16'>
-          <BriefSummary briefSummaryRef={briefSummaryRef} />
-          <RelevantLinks />
-          <RecentTopics scrollToBriefSummary={scrollToBriefSummary} />
-        </div> */
-}

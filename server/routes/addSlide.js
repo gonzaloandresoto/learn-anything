@@ -21,8 +21,6 @@ router.post('/', async (req, res) => {
     let openAIResponse = await OpenAIClient.generateResponse(responses);
 
     const finalResponse = JSON.parse(openAIResponse.choices[0].message.content);
-
-    console.log('FINAL RESPONSE', finalResponse);
     res.json(finalResponse);
   } catch (error) {
     console.log('ERROR GENERATING QUESTIONS', error);
