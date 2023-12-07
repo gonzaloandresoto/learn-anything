@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import useTopicContext from '../../useTopicContext';
+import useTopicContext from '../../hooks/useTopicContext';
 
 function Search({ topicSearchRef }) {
   const { topic, setTopic, createCourse } = useTopicContext();

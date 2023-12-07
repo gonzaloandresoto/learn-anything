@@ -1,5 +1,5 @@
 import React from 'react';
-import useTopicContext from '../../useTopicContext';
+import useTopicContext from '../../hooks/useTopicContext';
 import CourseCard from './CourseCard';
 function CourseGrid() {
   const { userCourses } = useTopicContext();

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import axios from 'axios';
-import Home from './Home';
-import TopicDeepdive from './TopicDeepdive';
-import TopicQuiz from './TopicQuiz';
-import { TopicProvider } from './TopicContext';
+
+// Contexts
 import { AuthProvider } from './context/AuthContext';
-import Deepdive from './components/deepdive/Deepdive';
+import { TopicProvider } from './context/TopicContext';
+
+// Components
+import Home from './components/Home';
 import SignIn from './components/authentication/SignIn';
 import SignUp from './components/authentication/SignUp';
 
@@ -32,18 +32,6 @@ function App() {
               <Route
                 path='/home'
                 element={<Home />}
-              />
-              <Route
-                path='/topic-deepdive'
-                element={<TopicDeepdive />}
-              />
-              <Route
-                path='/topic-quiz'
-                element={<TopicQuiz />}
-              />
-              <Route
-                path='/deep-dive'
-                element={<Deepdive />}
               />
             </Routes>
           </TopicProvider>

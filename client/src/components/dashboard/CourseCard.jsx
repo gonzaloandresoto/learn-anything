@@ -1,5 +1,5 @@
 import React from 'react';
-import useTopicContext from '../../useTopicContext';
+import useTopicContext from '../../hooks/useTopicContext';
 
 function CourseCard({ course }) {
   const { makeActiveCourse } = useTopicContext();

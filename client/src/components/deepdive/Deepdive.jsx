@@ -6,7 +6,7 @@ import AskInput from './AskInput';
 import KeyTerms from './KeyTerms';
 import SuggestedQuestions from './SuggestedQuestions';
 import Sidesheet from './Sidesheet';
-import useTopicContext from '../../useTopicContext';
+import useTopicContext from '../../hooks/useTopicContext';
 
 function Deepdive() {
   const { focusedSlide, setFocusedSlide, courseData } = useTopicContext();
