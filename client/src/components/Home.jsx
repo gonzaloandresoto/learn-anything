@@ -6,6 +6,7 @@ import Dashboard from './dashboard/Dashboard';
 import Sidebar from './other/Sidebar';
 
 function Home() {
+  console.log('Home.jsx');
   const { isLoading } = useTopicContext();
 
   return (

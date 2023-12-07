@@ -16,7 +16,7 @@ function CourseGrid() {
           ))}
         </div>
       )}
-      {!userCourses.length > 0 && (
+      {!userCourses?.length > 0 && (
         <div className='w-full h-full flex flex-col gap-2 items-center pt-40'>
           <p className='text-2xl text-primary-tan font-bold'>No courses</p>
           <p className='text-lg text-primary-tan font-medium'>
