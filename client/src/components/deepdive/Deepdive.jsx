@@ -15,6 +15,7 @@ function Deepdive() {
 
   const increaseSlide = () => {
     if (focusedSlide >= slideCount) return;
+    if (focusedSlide === null) return setFocusedSlide(0);
     setFocusedSlide((prev) => prev + 1);
   };
 

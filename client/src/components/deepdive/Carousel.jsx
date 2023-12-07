@@ -26,8 +26,9 @@ function Carousel({ parentRef }) {
 
   useEffect(() => {
     const gapSpacing = 8 * 4;
-    if (singleSlideRef.current && carouselRef.current) {
+    if (singleSlideRef.current && carouselRef.current && focusedSlide != null) {
       const slideWidth = singleSlideRef.current.offsetWidth;
+
       const scrollPosition = (slideWidth + gapSpacing) * (focusedSlide + 1);
 
       carouselRef.current.scrollLeft = scrollPosition > 0 ? scrollPosition : 0;
@@ -43,11 +44,14 @@ function Carousel({ parentRef }) {
         paddingRight: `${carouselPadding}px`,
       }}
     >
-      <CarouselTitleCard />
+      <div ref={singleSlideRef}>
+        <CarouselTitleCard />
+      </div>
+
       <div className='w-max h-full flex flex-row gap-8 '>
         {courseData?.topics &&
           courseData?.topics?.map((subtopic, index) => (
-            <div ref={index === 0 ? singleSlideRef : null}>
+            <div>
               <CarouselCard
                 key={index}
                 index={index}

@@ -44,7 +44,7 @@ function Sidesheet() {
       <div className='w-full h-[88px] flex px-6 items-center bg-white'>
         <p className='text-2xl font-bold'>Expert</p>
       </div>
-      <div className='flex flex-col gap-2 grow justify-end px-4 py-4 bg-white overflow-y-auto'>
+      <div className='flex flex-col gap-2 grow justify-end px-6 py-4 bg-white overflow-y-auto'>
         {courseConversation &&
           courseConversation.length > 1 &&
           courseConversation
@@ -80,7 +80,7 @@ function Sidesheet() {
       <div className='w-full h-[120px] px-6 pt-4 bg-white'>
         <div className='relative w-full h-max flex grow'>
           <input
-            placeholder='Ask a follow up'
+            placeholder='Ask anything'
             value={message}
             onChange={handleChange}
             className='w-full h-[48px] px-4 bg-tertiary-tan border border-primary-tan rounded-full text-primary-tan placeholder:text-primary-tan outline-none'
