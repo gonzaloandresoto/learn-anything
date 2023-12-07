@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CarouselTitleCard from './CarouselTitleCard';
 import CarouselCard from './CarouselCard';
 import useTopicContext from '../../useTopicContext';
 
 function Carousel({ parentRef }) {
-  const { courseData } = useTopicContext();
+  const { courseData, focusedSlide } = useTopicContext();
   const [carouselPadding, setCarouselPadding] = useState(0);
+  const carouselRef = useRef();
+  const singleSlideRef = useRef();
 
   useEffect(() => {
     const handleResize = () => {
       if (parentRef.current) {
-        const containerWidth = parentRef.current.offsetWidth;
+        const cardWidth = parentRef.current.offsetWidth;
         const windowWidth = window.innerWidth;
-        const padding = (windowWidth - containerWidth) / 2;
+        const padding = (windowWidth - cardWidth) / 2;
         setCarouselPadding(padding > 0 ? padding : 0);
       }
     };
@@ -22,8 +24,19 @@ function Carousel({ parentRef }) {
     return () => window.removeEventListener('resize', handleResize);
   }, [parentRef]);
 
+  useEffect(() => {
+    const gapSpacing = 8 * 4;
+    if (singleSlideRef.current && carouselRef.current) {
+      const slideWidth = singleSlideRef.current.offsetWidth;
+      const scrollPosition = (slideWidth + gapSpacing) * (focusedSlide + 1);
+
+      carouselRef.current.scrollLeft = scrollPosition > 0 ? scrollPosition : 0;
+    }
+  }, [focusedSlide]);
+
   return (
     <div
+      ref={carouselRef}
       className='flex flex-row gap-8 w-full min-h-[640px] overflow-x-auto hide-scrollbar'
       style={{
         paddingLeft: `${carouselPadding}px`,
@@ -34,14 +47,16 @@ function Carousel({ parentRef }) {
       <div className='w-max h-full flex flex-row gap-8 '>
         {courseData?.topics &&
           courseData?.topics?.map((subtopic, index) => (
-            <CarouselCard
-              key={index}
-              index={index}
-              unit={subtopic.unit}
-              introduction={subtopic.introduction}
-              content1={subtopic.inDepthContent1}
-              content2={subtopic.inDepthContent2}
-            />
+            <div ref={index === 0 ? singleSlideRef : null}>
+              <CarouselCard
+                key={index}
+                index={index}
+                unit={subtopic.unit}
+                introduction={subtopic.introduction}
+                content1={subtopic.inDepthContent1}
+                content2={subtopic.inDepthContent2}
+              />
+            </div>
           ))}
       </div>
     </div>

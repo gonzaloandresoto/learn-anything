@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Settings from '../../assets/settings.svg';
 import Table from '../../assets/table.svg';
@@ -7,13 +7,16 @@ import TableofContentsDropdown from './TableofContentsDropdown';
 function Header() {
   const [showTableContents, setShowTableContents] = useState(false);
   const navigate = useNavigate();
-  const handleTableContents = () => {
+
+  const handleTableContents = (e) => {
+    e.stopPropagation();
     setShowTableContents(!showTableContents);
   };
 
   const handleBack = () => {
     navigate('/home');
   };
+
   return (
     <div className='max-w-[1080px] w-full h-max flex flex-row items-center justify-between py-4'>
       <div className='flex w-[200px] h-max justify-start'>
@@ -37,13 +40,17 @@ function Header() {
         <div className='relative flex justify-end'>
           <div className='flex w-[48px] h-[48px] bg-tertiary-tan border border-primary-tan text-primary-tan rounded-md overflow-hidden'>
             <button
-              onClick={handleTableContents}
+              onClick={(e) => handleTableContents(e)}
               className='w-full h-full flex items-center justify-center'
             >
               <img src={Table} />
             </button>
           </div>
-          {showTableContents && <TableofContentsDropdown />}
+          {showTableContents && (
+            <TableofContentsDropdown
+              setShowTableContents={setShowTableContents}
+            />
+          )}
         </div>
 
         <div className='flex w-[48px] h-[48px] bg-tertiary-tan border border-primary-tan text-primary-tan rounded-md overflow-hidden'>

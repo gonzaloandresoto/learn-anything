@@ -7,7 +7,6 @@ function Search({ topicSearchRef }) {
   useEffect(() => {
     const handleKeyDown = (event) => {
       if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
-        console.log('TOPIC KEYDOWN', topic);
         createCourse(topic);
       }
     };

@@ -23,6 +23,7 @@ export const TopicProvider = ({ children }) => {
   const [showSidesheet, setShowSidesheet] = useState(false);
   const [activeCourseId, setCourseTopicId] = useState(null);
   const [userCourses, setUserCourses] = useState(null);
+  const [focusedSlide, setFocusedSlide] = useState(null);
 
   const navigate = useNavigate();
 
@@ -149,6 +150,8 @@ export const TopicProvider = ({ children }) => {
         setCourseTopicId,
         userCourses,
         makeActiveCourse,
+        focusedSlide,
+        setFocusedSlide,
       }}
     >
       {children}
