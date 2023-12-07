@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useAuthContext from '../hooks/useAuthContext';
 
-// axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
+// axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.withCredentials = true;
 
 const TopicContext = createContext({});
@@ -36,7 +36,6 @@ export const TopicProvider = ({ children }) => {
         topic,
         userId: user?.id,
       });
-      console.log(res?.data);
       setCourseData(res?.data?.main);
       setKeyTerms(res?.data?.keyTerms);
       setSuggestedQuestions(res?.data?.suggestedQuestions);
@@ -50,9 +49,7 @@ export const TopicProvider = ({ children }) => {
 
   const getRelevantQuestions = async (paragraph) => {
     try {
-      console.log('Sent relevant questions to DB');
       const res = await axios.post('/relevant_questions', { paragraph });
-      console.log(res?.data);
       setRelevantQuestions(res?.data);
     } catch (error) {
       console.log('Error getting relevant questions:', error);
@@ -61,24 +58,13 @@ export const TopicProvider = ({ children }) => {
 
   const addSlide = async (question) => {
     try {
-      console.log('Sent question for slide to DB');
       const res = await axios.post('/add_slide', { question });
-      console.log(res?.data);
       setAddedSlide(res?.data);
 
       if (courseData && courseData.topics) {
         const updatedTopics = [...courseData.topics];
         updatedTopics.splice(indexBeforeAdd + 1, 0, res.data);
         setCourseData({ ...courseData, topics: updatedTopics });
-        console.log('Updated course data:', {
-          courseData,
-          topics: updatedTopics,
-        });
-        console.log('recent course id:', activeCourseId);
-        updateCourseData(activeCourseId, {
-          ...courseData,
-          topics: updatedTopics,
-        });
       }
     } catch (error) {
       console.log('Error adding slide:', error);
@@ -87,7 +73,6 @@ export const TopicProvider = ({ children }) => {
 
   const updateCourseData = async (courseId, courseData) => {
     try {
-      console.log('Sent updated course data to DB');
       const res = await axios.post('/update_course_data', {
         courseId,
         courseData,
@@ -100,11 +85,7 @@ export const TopicProvider = ({ children }) => {
   useEffect(() => {
     const getUserCourses = async () => {
       try {
-        console.log('Sent request for user courses to DB');
-
         const res = await axios.post('/user_courses', { userId: user?.id });
-
-        console.log(res?.data);
         setUserCourses(res?.data);
       } catch (error) {
         console.log('Error getting user courses:', error);
@@ -115,9 +96,6 @@ export const TopicProvider = ({ children }) => {
   }, [user?.id]);
 
   const makeActiveCourse = (course) => {
-    console.log('Making course active', course);
-    console.log('course.main', course.main);
-    console.log('course?.key_terms', course?.keyTerms);
     setCourseData(course.main);
     setKeyTerms(course?.keyTerms);
     setSuggestedQuestions(course?.suggestedQuestions);

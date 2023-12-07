@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Loader from '../components/other/Loader';
 
-// axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
+// axios.defaults.baseURL = 'http://localhost:8000';
 axios.defaults.withCredentials = true;
 
 const AuthContext = createContext({});
@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const checkSession = async () => {
-      console.log('Checking session');
       try {
         const res = await axios.post('/authentication/check_session');
         setUser(res?.data?.user);
@@ -60,7 +59,6 @@ export const AuthProvider = ({ children }) => {
 
   const signOut = async () => {
     try {
-      console.log('Signing out');
       await axios.post('/authentication/sign_out');
       setUser(null);
     } catch (error) {

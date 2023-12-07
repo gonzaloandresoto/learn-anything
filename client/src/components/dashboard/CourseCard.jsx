@@ -13,7 +13,7 @@ function CourseCard({ course }) {
   return (
     <button
       onClick={handleClick}
-      className='group w-full h-max bg-white rounded-2xl shadow-sm cursor-pointer overflow-hidden text-left border
+      className='group w-full h-max bg-white rounded-2xl cursor-pointer overflow-hidden text-left border
       border-secondary-grey'
     >
       {course.thumbnail ? (
