@@ -20,10 +20,6 @@ function App() {
           <TopicProvider>
             <Routes>
               <Route
-                path='/'
-                element={<Home />}
-              />
-              <Route
                 path='/signin'
                 element={<SignIn />}
               />
@@ -32,6 +28,10 @@ function App() {
                 element={<SignUp />}
               />
               <Route element={<ProtectedRoutes />}>
+                <Route
+                  path='/'
+                  element={<Home />}
+                />
                 <Route
                   path='/home'
                   element={<Home />}

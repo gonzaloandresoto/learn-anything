@@ -12,7 +12,7 @@ const ProtectedRoutes = () => {
       </div>
     );
 
-  return user ? (
+  return user !== null ? (
     <Outlet />
   ) : (
     <>
