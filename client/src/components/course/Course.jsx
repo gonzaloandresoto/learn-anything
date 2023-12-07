@@ -25,7 +25,7 @@ function Course() {
   };
 
   return (
-    <div className='w-screen h-screen flex flex-col gap-8 grow items-center bg-tertiary-tan py-8 overflow-y-auto'>
+    <div className='w-screen h-screen flex flex-col gap-12 grow items-center bg-tertiary-tan pt-8 pb-16 overflow-y-auto'>
       <Header />
       <Carousel parentRef={deepdiveRef} />
       <div

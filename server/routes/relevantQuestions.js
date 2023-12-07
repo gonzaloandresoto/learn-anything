@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
       {
         role: 'system',
         content:
-          'Your response should be in JSON format. Return two thought-provoking questions directly related to the topic of the provided paragraph, allowing for a deeper exploration.',
+          'Your response should be in JSON format. Return two questions directly related to the topic of the provided paragraph, allowing for a deeper exploration.',
       },
       {
         role: 'user',
@@ -24,7 +24,6 @@ router.post('/', async (req, res) => {
     const finalResponse = JSON.parse(
       openAIResponse.choices[0].message.content
     ).questions;
-    console.log('FINAL RESPONSE', finalResponse);
 
     res.json(finalResponse);
   } catch (error) {

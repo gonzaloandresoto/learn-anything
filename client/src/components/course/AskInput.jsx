@@ -11,6 +11,10 @@ function AskInput() {
   };
 
   const sendMessage = (message) => {
+    if (message === '') {
+      setShowSidesheet(true);
+      return;
+    }
     sendConversationMessage(message);
     setMessage('');
     setShowSidesheet(true);

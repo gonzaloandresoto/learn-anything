@@ -6,8 +6,12 @@ function Search({ topicSearchRef }) {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === 'Enter') {
+      if (
+        ((event.metaKey || event.ctrlKey) && event.key === 'Enter') ||
+        event.key === 'Enter'
+      ) {
         createCourse(topic);
+        setTopic('');
       }
     };
 
@@ -17,10 +21,6 @@ function Search({ topicSearchRef }) {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [topic]);
-
-  const submitSearch = (topic) => {
-    createCourse(topic);
-  };
 
   const handleChange = (e) => {
     setTopic(e.target.value);
