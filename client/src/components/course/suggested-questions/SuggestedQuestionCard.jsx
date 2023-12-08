@@ -23,9 +23,7 @@ function SuggestedQuestionCard({ question }) {
           src={Search}
           className='w-[16px] h-[16px]'
         />
-        <p className='text-lg text-primary-black font-medium truncate'>
-          {question}
-        </p>
+        <p className='text-lg text-black font-medium truncate'>{question}</p>
       </button>
     </div>
   );

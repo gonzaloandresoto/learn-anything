@@ -12259,7 +12259,7 @@
             className: 'flex flex-col gap-4',
             children: [
               (0, fn.jsx)('p', {
-                className: 'text-xl text-primary-black font-medium',
+                className: 'text-xl text-black font-medium',
                 children: 'Fun Links',
               }),
               (0, fn.jsx)('div', {
@@ -12272,7 +12272,7 @@
                           'div',
                           {
                             className:
-                              'flex items-center justify-between text-base text-primary-black font-regular hover:text-primary-indigo hover:underline',
+                              'flex items-center justify-between text-base text-black font-regular hover:text-primary-indigo hover:underline',
                             children: [
                               (0, fn.jsx)('a', {
                                 href: e.url,
@@ -12305,7 +12305,7 @@
           className: 'w-full flex flex-col gap-4',
           children: [
             (0, fn.jsxs)('p', {
-              className: 'text-xl text-primary-black font-medium',
+              className: 'text-xl text-black font-medium',
               children: [' ', 'Curated by Our Community'],
             }),
             (0, fn.jsx)('div', {
@@ -12362,7 +12362,7 @@
               className: 'flex flex-col gap-4 w-[400px]',
               children: [
                 (0, fn.jsx)('p', {
-                  className: 'text-xl text-primary-black font-medium',
+                  className: 'text-xl text-black font-medium',
                   children: 'Brief Summary',
                 }),
                 (0, fn.jsx)('p', {
@@ -12427,12 +12427,11 @@
               className: 'flex flex-col gap-4 w-[480px] items-end',
               children: [
                 (0, fn.jsx)('p', {
-                  className: 'text-xl text-primary-black font-medium',
+                  className: 'text-xl text-black font-medium',
                   children: u && u,
                 }),
                 (0, fn.jsx)('p', {
-                  className:
-                    'text-base text-primary-black font-regular text-right',
+                  className: 'text-base text-black font-regular text-right',
                   children:
                     u &&
                     (null === i ||
@@ -12482,7 +12481,7 @@
           className: 'flex flex-col gap-4',
           children: [
             (0, fn.jsx)('p', {
-              className: 'text-lg text-primary-black font-semibold',
+              className: 'text-lg text-black font-semibold',
               children: 'I want to learn about...',
             }),
             (0, fn.jsxs)('div', {
@@ -12495,7 +12494,7 @@
                   },
                   placeholder: 'Topic',
                   className:
-                    'w-full text-3xl text-primary-black font-medium py-2 outline-none placeholder:text-primary-grey',
+                    'w-full text-3xl text-black font-medium py-2 outline-none placeholder:text-primary-grey',
                 }),
                 (0, fn.jsx)('button', {
                   onClick: () => e(),
@@ -12531,7 +12530,7 @@
                     }),
                     (0, fn.jsx)('button', {
                       className:
-                        'w-[104px] py-1 text-sm text-primary-black font-medium bg-white rounded-md',
+                        'w-[104px] py-1 text-sm text-black font-medium bg-white rounded-md',
                       children: 'Me',
                     }),
                   ],
@@ -12569,7 +12568,7 @@
                   }),
                 }),
                 (0, fn.jsx)('p', {
-                  className: 'text-2xl text-primary-black font-medium',
+                  className: 'text-2xl text-black font-medium',
                   children: n.topic,
                 }),
                 (0, fn.jsx)('p', { children: n.overview }),
@@ -12609,7 +12608,7 @@
                                         children: [
                                           (0, fn.jsx)('p', {
                                             className:
-                                              'text-lg text-primary-black font-medium',
+                                              'text-lg text-black font-medium',
                                             children: e.subTitle,
                                           }),
                                           (0, fn.jsx)('p', {
@@ -12651,7 +12650,7 @@
             class: 'flex flex-col gap-4',
             children: [
               (0, fn.jsx)('p', {
-                className: 'text-xl text-primary-black font-medium',
+                className: 'text-xl text-black font-medium',
                 children: null === n || void 0 === n ? void 0 : n.question,
               }),
               (0, fn.jsx)('div', {
@@ -12673,7 +12672,7 @@
                                 c ===
                                   (null === e || void 0 === e ? void 0 : e.id)
                                   ? 'bg-primary-indigo text-white'
-                                  : 'bg-tertiary-grey text-primary-black'
+                                  : 'bg-tertiary-grey text-black'
                               ),
                             children: [
                               (0, fn.jsx)('p', { children: '\ud83d\udd18' }),
@@ -12698,7 +12697,7 @@
                     c ===
                       (null === n || void 0 === n ? void 0 : n.correctAnswer)
                       ? 'bg-primary-indigo text-white'
-                      : 'bg-secondary-indigo text-primary-black'
+                      : 'bg-secondary-indigo text-black'
                   ),
                 children: 'Continue',
               }),
@@ -12737,7 +12736,7 @@
                 }),
               }),
               (0, fn.jsx)('p', {
-                className: 'text-3xl text-primary-black font-medium',
+                className: 'text-3xl text-black font-medium',
                 children: null === a || void 0 === a ? void 0 : a.quiz_title,
               }),
               (0, fn.jsxs)('div', {

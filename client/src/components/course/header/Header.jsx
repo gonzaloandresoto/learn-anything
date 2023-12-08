@@ -38,9 +38,7 @@ function Header() {
 
       <div className='flex flex-col items-center'>
         <p className='text-xl text-primary-tan font-bold'>Course</p>
-        <p className='text-2xl text-primary-black font-bold'>
-          {courseData?.title}
-        </p>
+        <p className='text-2xl text-black font-bold'>{courseData?.title}</p>
       </div>
       <div className='w-[200px] h-max flex gap-2 justify-end'>
         <div className='relative flex justify-end'>

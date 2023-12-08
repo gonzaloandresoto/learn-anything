@@ -38,7 +38,7 @@ function TableofContentsDropdown({ setShowTableContents }) {
                 console.log('SET FOCUSED SLIDE TO:', index);
                 setFocusedSlide(index);
               }}
-              className=' w-full px-6 py-2 bg-white hover:bg-tertiary-tan text-left text-primary-black font-medium whitespace-nowrap'
+              className=' w-full px-6 py-2 bg-white hover:bg-tertiary-tan text-left text-black font-medium whitespace-nowrap'
             >
               <p>{topic.unit}</p>
             </button>

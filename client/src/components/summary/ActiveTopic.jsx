@@ -26,10 +26,10 @@ function ActiveTopic() {
           )}
         </div>
         <div className='flex flex-col gap-4'>
-          <p className='text-3xl text-primary-black font-medium'>
+          <p className='text-3xl text-black font-medium'>
             {activeTopic && activeTopic}
           </p>
-          <p className='text-xl text-primary-black font-regular'>
+          <p className='text-xl text-black font-regular'>
             {activeTopic &&
               briefSummary?.topics?.find((item) => item.name === activeTopic)
                 ?.summary}

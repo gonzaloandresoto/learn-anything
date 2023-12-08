@@ -22,14 +22,12 @@ function CourseCard({ course }) {
         </div>
       ) : (
         <div className='w-full h-[188px] p-4 overflow-hidden bg-white'>
-          <p className='text-lg text-primary-black font-medium'>
-            "{firstSentence}."
-          </p>
+          <p className='text-lg text-black font-medium'>"{firstSentence}."</p>
         </div>
       )}
 
       <div className='border-t border-secondary-tan p-4'>
-        <p className='text-xl text-primary-black font-semibold font-secondary group-hover:text-primary-tan'>
+        <p className='text-xl text-black font-semibold font-secondary group-hover:text-primary-tan'>
           {course?.main?.title}
         </p>
       </div>
