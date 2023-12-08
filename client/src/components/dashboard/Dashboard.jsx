@@ -1,6 +1,6 @@
 import React from 'react';
-import Search from '../components/dashboard/Search';
-import CourseGrid from '../components/dashboard/CourseGrid';
+import Search from './Search';
+import CourseGrid from './CourseGrid';
 
 function Dashboard() {
   return (

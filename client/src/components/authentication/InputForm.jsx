@@ -47,7 +47,7 @@ function InputForm({
                 value={formFields.email}
                 onChange={handleChange}
                 placeholder='you@email.com'
-                className='w-[328px] text-primary-black bg-tertiary-grey rounded-lg px-4 py-2 outline-none placeholder:text-primary-tan'
+                className='w-[328px] text-primary-black bg-tertiary-tan rounded-lg px-4 py-2 outline-none placeholder:text-primary-tan'
               />
             </div>
             <div className='flex flex-col gap-1'>
@@ -58,7 +58,7 @@ function InputForm({
                 value={formFields.password}
                 onChange={handleChange}
                 placeholder=''
-                className='w-[328px] text-primary-black bg-tertiary-grey rounded-lg px-4 py-2 outline-none'
+                className='w-[328px] text-primary-black bg-tertiary-tan rounded-lg px-4 py-2 outline-none'
               />
             </div>
           </div>

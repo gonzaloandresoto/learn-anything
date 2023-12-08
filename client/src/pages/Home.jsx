@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import useTopicContext from '../hooks/useTopicContext';
 
 import Loader from '../components/other/Loader';
-import Dashboard from './Dashboard';
+import Dashboard from '../components/dashboard/Dashboard';
 import Sidebar from '../components/other/Sidebar';
 
 function Home() {

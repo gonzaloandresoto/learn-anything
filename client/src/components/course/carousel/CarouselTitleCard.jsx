@@ -8,7 +8,7 @@ function CarouselTitleCard() {
       <p className='text-4xl text-tertiary-tan font-bold'>
         {courseData?.title}
       </p>
-      <div className='w-1/3 h-[2px] flex bg-secondary-grey'></div>
+      <div className='w-1/3 h-[2px] flex bg-secondary-tan'></div>
       <p className='text-xl text-tertiary-tan font-medium text-center'>
         {courseData?.summary}
       </p>

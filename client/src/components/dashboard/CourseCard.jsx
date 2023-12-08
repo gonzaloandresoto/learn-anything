@@ -14,7 +14,7 @@ function CourseCard({ course }) {
     <button
       onClick={handleClick}
       className='group w-full h-max bg-white rounded-2xl cursor-pointer overflow-hidden text-left border
-      border-secondary-grey'
+      border-secondary-tan'
     >
       {course.thumbnail ? (
         <div className='w-full hh-[168px]  overflow-hidden'>
