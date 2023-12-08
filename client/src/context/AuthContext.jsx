@@ -1,11 +1,6 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Loader from '../components/other/Loader';
-
-axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
-// axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.withCredentials = true;
+import axiosInstance from '../utils/axiosConfig';
 
 const AuthContext = createContext({});
 
@@ -18,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const res = await axios.post('/authentication/check_session');
+        const res = await axiosInstance.post('/authentication/check_session');
         setUser(res?.data?.user);
         console.log('Setting user success', res?.data?.user);
       } catch (error) {
@@ -33,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const signIn = async (email, password) => {
     try {
-      const res = await axios.post('/authentication/sign_in', {
+      const res = await axiosInstance.post('/authentication/sign_in', {
         email,
         password,
       });
@@ -46,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 
   const signUp = async (email, password) => {
     try {
-      const res = await axios.post('/authentication/sign_up', {
+      const res = await axiosInstance.post('/authentication/sign_up', {
         email,
         password,
       });
@@ -59,7 +54,7 @@ export const AuthProvider = ({ children }) => {
 
   const signOut = async () => {
     try {
-      await axios.post('/authentication/sign_out');
+      await axiosInstance.post('/authentication/sign_out');
       setUser(null);
     } catch (error) {
       console.log('Error signing out:', error);

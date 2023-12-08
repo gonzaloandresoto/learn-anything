@@ -1,5 +1,5 @@
 import React from 'react';
-import useTopicContext from '../../hooks/useTopicContext';
+import useTopicContext from '../../../hooks/useTopicContext';
 
 function CarouselTitleCard() {
   const { courseData } = useTopicContext();

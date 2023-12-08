@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import useTopicContext from '../../hooks/useTopicContext';
-import Search from '../../assets/search.svg';
 
-function AskInput() {
+// Context
+import useTopicContext from '../../../hooks/useTopicContext';
+
+// Assets
+import Search from '../../../assets/search.svg';
+
+function Input() {
   const { setShowSidesheet, sendConversationMessage } = useTopicContext();
   const [message, setMessage] = useState('');
 
@@ -40,4 +44,4 @@ function AskInput() {
   );
 }
 
-export default AskInput;
+export default Input;

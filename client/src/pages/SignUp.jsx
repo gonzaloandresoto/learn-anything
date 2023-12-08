@@ -1,6 +1,6 @@
 import React from 'react';
-import useAuthContext from '../../hooks/useAuthContext';
-import FormInput from './FormInput';
+import useAuthContext from '../hooks/useAuthContext';
+import FormInput from '../components/authentication/InputForm';
 
 function SignUp() {
   const { signUp } = useAuthContext();

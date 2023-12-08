@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Loader from '../other/Loader';
 
-function FormInput({
+function InputForm({
   greeting,
   CTA,
   authFunction,
@@ -91,4 +91,4 @@ function FormInput({
   );
 }
 
-export default FormInput;
+export default InputForm;

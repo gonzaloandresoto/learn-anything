@@ -1,7 +1,13 @@
 import React, { useContext, useState } from 'react';
-import useTopicContext from '../../hooks/useTopicContext';
-import Sparkles from '../../assets/sparkes.svg';
+
+// Context
+import useTopicContext from '../../../hooks/useTopicContext';
+
+// Components
 import AddSlideQuestionGroup from './AddSlideQuestionGroup';
+
+// Assets
+import Sparkles from '../../../assets/sparkes.svg';
 
 function AddSlide({ index, content1, content2 }) {
   const { getRelevantQuestions, setIndexBeforeAdd } = useTopicContext();

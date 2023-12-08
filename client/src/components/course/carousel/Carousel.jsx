@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+
+// Context
+import useTopicContext from '../../../hooks/useTopicContext';
+
+// Components
 import CarouselTitleCard from './CarouselTitleCard';
 import CarouselCard from './CarouselCard';
-import useTopicContext from '../../hooks/useTopicContext';
 
 function Carousel({ parentRef }) {
   const { courseData, focusedSlide } = useTopicContext();

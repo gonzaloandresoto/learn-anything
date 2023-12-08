@@ -1,6 +1,10 @@
 import React from 'react';
+
+// Context
+import useTopicContext from '../../../hooks/useTopicContext';
+
+// Components
 import SuggestedQuestionCard from './SuggestedQuestionCard';
-import useTopicContext from '../../hooks/useTopicContext';
 
 function SuggestedQuestions() {
   const { suggestedQuestions } = useTopicContext();

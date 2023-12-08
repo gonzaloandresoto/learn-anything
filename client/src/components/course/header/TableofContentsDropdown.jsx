@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import useTopicContext from '../../hooks/useTopicContext';
+import useTopicContext from '../../../hooks/useTopicContext';
 
 function TableofContentsDropdown({ setShowTableContents }) {
   const { courseData, setFocusedSlide } = useTopicContext();

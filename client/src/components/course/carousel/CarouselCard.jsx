@@ -1,5 +1,5 @@
 import React from 'react';
-import AddSlide from './AddSlide';
+import AddSlide from '../add-slide/AddSlide';
 
 function CarouselCard({ index, unit, introduction, content1, content2 }) {
   return (

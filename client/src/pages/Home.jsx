@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import useTopicContext from '../hooks/useTopicContext';
 
-import Loader from './other/Loader';
-import Dashboard from './dashboard/Dashboard';
-import Sidebar from './other/Sidebar';
+import Loader from '../components/other/Loader';
+import Dashboard from './Dashboard';
+import Sidebar from '../components/other/Sidebar';
 
 function Home() {
   console.log('Home.jsx');

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import AddSlideQuestion from './AddSlideQuestion';
-import useTopicContext from '../../hooks/useTopicContext';
+import useTopicContext from '../../../hooks/useTopicContext';
 
 function AddSlideQuestionGroup({ setShowQuestions }) {
   const { relevantQuestions, setRelevantQuestions } = useTopicContext();

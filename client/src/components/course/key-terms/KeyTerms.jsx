@@ -1,6 +1,10 @@
 import React from 'react';
+
+// Context
+import useTopicContext from '../../../hooks/useTopicContext';
+
+// Components
 import KeyTermsCard from './KeyTermsCard';
-import useTopicContext from '../../hooks/useTopicContext';
 
 function KeyTerms() {
   const { keyTerms } = useTopicContext();
@@ -12,8 +16,8 @@ function KeyTerms() {
           keyTerms.map((term, index) => (
             <KeyTermsCard
               key={index}
-              term={term.term}
-              definition={term.definition}
+              term={term?.term}
+              definition={term?.definition}
             />
           ))}
       </div>

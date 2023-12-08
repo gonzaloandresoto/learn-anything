@@ -4,10 +4,6 @@ function KeyTermsCard({ term, definition }) {
   const cardRef = useRef(null);
   const [showDefinition, setShowDefinition] = useState(false);
 
-  const handleClick = () => {
-    setShowDefinition(true);
-  };
-
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (cardRef.current && !cardRef.current.contains(e.target)) {
@@ -20,6 +16,10 @@ function KeyTermsCard({ term, definition }) {
       window.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const handleClick = () => {
+    setShowDefinition(true);
+  };
 
   return (
     <>

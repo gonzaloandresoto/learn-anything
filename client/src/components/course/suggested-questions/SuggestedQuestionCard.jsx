@@ -1,6 +1,10 @@
 import React from 'react';
-import Search from '../../assets/search.svg';
-import useTopicContext from '../../hooks/useTopicContext';
+
+// Context
+import useTopicContext from '../../../hooks/useTopicContext';
+
+// Assets
+import Search from '../../../assets/search.svg';
 
 function SuggestedQuestionCard({ question }) {
   const { setShowSidesheet, sendConversationMessage } = useTopicContext();

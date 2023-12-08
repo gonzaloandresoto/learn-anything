@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import useTopicContext from '../../hooks/useTopicContext';
-import Search from '../../assets/search.svg';
+
+// Context
+import useTopicContext from '../../../hooks/useTopicContext';
+
+// Assets
+import Search from '../../../assets/search.svg';
 
 function Sidesheet() {
   const {

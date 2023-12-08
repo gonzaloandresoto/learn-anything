@@ -1,12 +1,15 @@
 import React, { useRef } from 'react';
-import Header from './Header';
-import Carousel from './Carousel';
-import QuizButton from './QuizButton';
-import AskInput from './AskInput';
-import KeyTerms from './KeyTerms';
-import SuggestedQuestions from './SuggestedQuestions';
-import Sidesheet from './Sidesheet';
-import useTopicContext from '../../hooks/useTopicContext';
+
+// Context
+import useTopicContext from '../hooks/useTopicContext';
+
+// Components
+import Header from '../components/course/header/Header';
+import Carousel from '../components/course/carousel/Carousel';
+import AskInput from '../components/course/ask/AskInput';
+import KeyTerms from '../components/course/key-terms/KeyTerms';
+import SuggestedQuestions from '../components/course/suggested-questions/SuggestedQuestions';
+import Sidesheet from '../components/course/sidesheet/Sidesheet';
 
 function Course() {
   const { focusedSlide, setFocusedSlide, courseData } = useTopicContext();
@@ -33,7 +36,6 @@ function Course() {
         className='max-w-[1080px] w-full h-max flex flex-col justify-center gap-8 grow'
       >
         <div className='w-full flex items-center gap-4'>
-          <QuizButton />
           <AskInput />
 
           <div className='flex items-center gap-2'>

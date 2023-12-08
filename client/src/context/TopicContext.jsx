@@ -1,11 +1,9 @@
 import React, { useState, useEffect, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import useAuthContext from '../hooks/useAuthContext';
+import axiosInstance from '../utils/axiosConfig';
 
-axios.defaults.baseURL = 'https://learn-anything-b61f2394c70a.herokuapp.com/';
-// axios.defaults.baseURL = 'http://localhost:8000';
-axios.defaults.withCredentials = true;
+// Contexts
+import useAuthContext from '../hooks/useAuthContext';
 
 const TopicContext = createContext({});
 
@@ -32,7 +30,7 @@ export const TopicProvider = ({ children }) => {
     try {
       setIsLoading(true);
       console.log('Sent course to DB');
-      const res = await axios.post('/create_course', {
+      const res = await axiosInstance.post('/create_course', {
         topic,
         userId: user?.id,
       });
@@ -49,7 +47,9 @@ export const TopicProvider = ({ children }) => {
 
   const getRelevantQuestions = async (paragraph) => {
     try {
-      const res = await axios.post('/relevant_questions', { paragraph });
+      const res = await axiosInstance.post('/relevant_questions', {
+        paragraph,
+      });
       setRelevantQuestions(res?.data);
     } catch (error) {
       console.log('Error getting relevant questions:', error);
@@ -58,7 +58,7 @@ export const TopicProvider = ({ children }) => {
 
   const addSlide = async (question) => {
     try {
-      const res = await axios.post('/add_slide', { question });
+      const res = await axiosInstance.post('/add_slide', { question });
       setAddedSlide(res?.data);
 
       if (courseData && courseData.topics) {
@@ -73,7 +73,7 @@ export const TopicProvider = ({ children }) => {
 
   const updateCourseData = async (courseId, courseData) => {
     try {
-      const res = await axios.post('/update_course_data', {
+      const res = await axiosInstance.post('/update_course_data', {
         courseId,
         courseData,
       });
@@ -85,7 +85,9 @@ export const TopicProvider = ({ children }) => {
   useEffect(() => {
     const getUserCourses = async () => {
       try {
-        const res = await axios.post('/user_courses', { userId: user?.id });
+        const res = await axiosInstance.post('/user_courses', {
+          userId: user?.id,
+        });
         setUserCourses(res?.data);
       } catch (error) {
         console.log('Error getting user courses:', error);
@@ -109,7 +111,7 @@ export const TopicProvider = ({ children }) => {
       const newConversation = [...courseConversation, userMessage];
 
       setCourseConversation(newConversation);
-      const res = await axios.post('/chat_course', {
+      const res = await axiosInstance.post('/chat_course', {
         conversation: newConversation,
       });
 
